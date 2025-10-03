@@ -172,7 +172,38 @@ namespace HamiltonianLab::Renderers
 
             if (node->Label != nullptr && node->Label->Length > 0)
             {
-                auto font = gcnew System::Drawing::Font(style->LabelFontName, style->LabelFontSize);
+                float baseFontSize = style->LabelFontSize > 0.0f ? style->LabelFontSize : 1.0f;
+                float scaledFontSize = baseFontSize;
+
+                auto measureFont = gcnew System::Drawing::Font(style->LabelFontName, baseFontSize);
+                auto measureFormat = gcnew StringFormat(StringFormat::GenericTypographic);
+                measureFormat->FormatFlags = measureFormat->FormatFlags | StringFormatFlags::MeasureTrailingSpaces;
+                SizeF measured = g->MeasureString(node->Label, measureFont, PointF::Empty, measureFormat);
+                delete measureFormat;
+
+                float paddingFactor = 0.85f;
+                float availableWidth = rect.Width * paddingFactor;
+                float availableHeight = rect.Height * paddingFactor;
+
+                if (measured.Width > 0.0f && measured.Height > 0.0f && availableWidth > 0.0f && availableHeight > 0.0f)
+                {
+                    float widthScale = availableWidth / measured.Width;
+                    float heightScale = availableHeight / measured.Height;
+                    float scale = widthScale < heightScale ? widthScale : heightScale;
+                    if (scale > 0.0f)
+                    {
+                        scaledFontSize = baseFontSize * scale;
+                    }
+                }
+
+                delete measureFont;
+
+                if (scaledFontSize < 1.0f)
+                {
+                    scaledFontSize = 1.0f;
+                }
+
+                auto font = gcnew System::Drawing::Font(style->LabelFontName, scaledFontSize);
                 auto format = gcnew StringFormat();
                 format->Alignment = StringAlignment::Center;
                 format->LineAlignment = StringAlignment::Center;

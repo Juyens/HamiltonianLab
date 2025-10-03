@@ -161,6 +161,8 @@
     <ClCompile Include="src\Models\Selection\Selection.cpp" />
     <ClCompile Include="src\Renderers\GraphCanvas.cpp" />
     <ClCompile Include="src\Renderers\GridPainter.cpp" />
+    <ClCompile Include="src\Renderers\SceneRenderer.cpp" />
+    <ClCompile Include="src\Tools\ToolController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -176,6 +178,7 @@
     </ClInclude>
     <ClInclude Include="src\Common\ToolMode.h" />
     <ClInclude Include="src\Models\Selection\Selection.h" />
+    <ClInclude Include="src\Renderers\SceneRenderer.h" />
     <ClInclude Include="src\Tools\AddEdgeTool.h" />
     <ClInclude Include="src\Tools\AddNodeTool.h" />
     <ClInclude Include="src\Tools\BaseTool.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="src\Renderers\GraphCanvas.h" />
     <ClInclude Include="src\Renderers\GridPainter.h" />
     <ClInclude Include="src\Tools\SelectTool.h" />
+    <ClInclude Include="src\Tools\ToolController.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="app.manifest" />

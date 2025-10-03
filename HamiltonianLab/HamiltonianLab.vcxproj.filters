@@ -48,6 +48,12 @@
     <ClCompile Include="src\Models\Selection\Selection.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderers\SceneRenderer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\ToolController.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\MainForm.h">
@@ -104,6 +110,12 @@
     <ClInclude Include="src\Models\Selection\Selection.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderers\SceneRenderer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\ToolController.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="app.manifest" />
@@ -129,7 +141,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="forms\*.resx">
+    <EmbeddedResource Include="forms\MainForm.resx">
       <Filter>Archivos de recursos</Filter>
     </EmbeddedResource>
   </ItemGroup>

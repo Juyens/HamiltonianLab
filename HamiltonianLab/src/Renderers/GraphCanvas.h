@@ -3,11 +3,8 @@
 #include <Common/ToolMode.h>
 #include <Models/GraphDocument.h>
 #include <Renderers/GridPainter.h>
-#include <Tools/ITool.h>
-#include <Tools/SelectTool.h>
-#include <Tools/AddNodeTool.h>
-#include <Tools/AddEdgeTool.h>
-#include <Tools/DeleteTool.h>
+#include <Renderers/SceneRenderer.h>
+#include <Tools/ToolController.h>
 
 namespace HamiltonianLab::Renderers
 {
@@ -47,21 +44,13 @@ namespace HamiltonianLab::Renderers
 
     private:
         void InitStyles();
-        void DrawScene(Graphics^ g);
-        void UpdateHovered(Models::Visual::VisualNode^ node, Models::Visual::VisualEdge^ edge);
-        void InvalidateVisual(Models::Visual::VisualNode^ node);
-        void InvalidateVisual(Models::Visual::VisualEdge^ edge);
-        System::Drawing::Rectangle GetNodeInvalidRect(Models::Visual::VisualNode^ node);
-        System::Drawing::Rectangle GetEdgeInvalidRect(Models::Visual::VisualEdge^ edge);
-        void SetActiveTool(ToolMode mode);
+        void InvalidateRegion(System::Drawing::Rectangle rect);
+        void UpdateCursor();
 
     private:
-        ToolMode m_mode{ ToolMode::Select };
         GraphDocument^ m_doc;
         GridPainter^ m_grid;
-        System::Collections::Generic::Dictionary<ToolMode, HamiltonianLab::ITool^>^ m_tools;
-        HamiltonianLab::ITool^ m_activeTool;
-        Models::Visual::VisualNode^ m_hoveredNode;
-        Models::Visual::VisualEdge^ m_hoveredEdge;
+        SceneRenderer^ m_renderer;
+        HamiltonianLab::ToolController^ m_toolController;
     };
 }

@@ -60,6 +60,26 @@ namespace HamiltonianLab::Renderers
             Invalidate();
     }
 
+    void GraphCanvas::RequestInvalidate()
+    {
+        this->Invalidate();
+    }
+
+    void GraphCanvas::RequestInvalidate(System::Drawing::Rectangle rect)
+    {
+        InvalidateRegion(rect);
+    }
+
+    System::Drawing::RectangleF GraphCanvas::ViewportBounds::get()
+    {
+        auto client = this->ClientRectangle;
+        return System::Drawing::RectangleF(
+            static_cast<float>(client.Left),
+            static_cast<float>(client.Top),
+            static_cast<float>(client.Width),
+            static_cast<float>(client.Height));
+    }
+
     void GraphCanvas::OnPaint(PaintEventArgs^ e)
     {
         Control::OnPaint(e);

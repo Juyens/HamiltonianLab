@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Common/ToolMode.h>
+#include <Interaction/IInvalidationSink.h>
+#include <Interaction/IViewportService.h>
 #include <Models/GraphDocument.h>
 #include <Renderers/GridPainter.h>
 #include <Renderers/SceneRenderer.h>
@@ -14,7 +16,9 @@ namespace HamiltonianLab::Renderers
 
     using namespace HamiltonianLab::Models;
 
-    public ref class GraphCanvas : public Control
+    public ref class GraphCanvas : public Control,
+        public HamiltonianLab::Interaction::IInvalidationSink,
+        public HamiltonianLab::Interaction::IViewportService
     {
     public:
         GraphCanvas();
@@ -30,6 +34,14 @@ namespace HamiltonianLab::Renderers
         property HamiltonianLab::Models::Selection^ Selection
         {
             HamiltonianLab::Models::Selection^ get() { return m_doc ? m_doc->Selection : nullptr; }
+        }
+
+        virtual void RequestInvalidate() = HamiltonianLab::Interaction::IInvalidationSink::RequestInvalidate;
+        virtual void RequestInvalidate(System::Drawing::Rectangle rect) = HamiltonianLab::Interaction::IInvalidationSink::RequestInvalidate;
+
+        virtual property System::Drawing::RectangleF ViewportBounds
+        {
+            System::Drawing::RectangleF get() = HamiltonianLab::Interaction::IViewportService::ViewportBounds::get;
         }
 
     protected:

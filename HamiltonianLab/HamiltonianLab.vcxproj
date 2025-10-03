@@ -151,6 +151,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="forms\MainForm.cpp" />
+    <ClCompile Include="src\Interaction\MarqueeSelectionController.cpp" />
+    <ClCompile Include="src\Interaction\MovementConstraints.cpp" />
+    <ClCompile Include="src\Interaction\SelectionDragController.cpp" />
     <ClCompile Include="src\Interop\ManagedGraph.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Models\GraphDocument.cpp" />
@@ -163,6 +166,7 @@
     <ClCompile Include="src\Renderers\GraphCanvas.cpp" />
     <ClCompile Include="src\Renderers\GridPainter.cpp" />
     <ClCompile Include="src\Renderers\SceneRenderer.cpp" />
+    <ClCompile Include="src\Tools\SelectTool.cpp" />
     <ClCompile Include="src\Tools\SetWeightTool.cpp" />
     <ClCompile Include="src\Tools\ToolController.cpp" />
   </ItemGroup>
@@ -179,6 +183,11 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="src\Common\ToolMode.h" />
+    <ClInclude Include="src\Interaction\IInvalidationSink.h" />
+    <ClInclude Include="src\Interaction\IViewportService.h" />
+    <ClInclude Include="src\Interaction\MarqueeSelectionController.h" />
+    <ClInclude Include="src\Interaction\MovementConstraints.h" />
+    <ClInclude Include="src\Interaction\SelectionDragController.h" />
     <ClInclude Include="src\Models\Labeling\NodeLabelAllocator.h" />
     <ClInclude Include="src\Models\Selection\Selection.h" />
     <ClInclude Include="src\Renderers\SceneRenderer.h" />

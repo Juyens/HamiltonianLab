@@ -11,7 +11,10 @@ namespace HamiltonianLab
         , m_hoveredEdge(nullptr)
         , m_invalidate(nullptr)
     {
-        m_tools->Add(ToolMode::Select, gcnew SelectTool(m_document));
+        auto invalidationSink = dynamic_cast<HamiltonianLab::Interaction::IInvalidationSink^>(hostControl);
+        auto viewportService = dynamic_cast<HamiltonianLab::Interaction::IViewportService^>(hostControl);
+
+        m_tools->Add(ToolMode::Select, gcnew SelectTool(m_document, invalidationSink, viewportService));
         m_tools->Add(ToolMode::AddNode, gcnew AddNodeTool(m_document));
         m_tools->Add(ToolMode::AddEdge, gcnew AddEdgeTool(m_document));
         m_tools->Add(ToolMode::Delete, gcnew DeleteTool(m_document));

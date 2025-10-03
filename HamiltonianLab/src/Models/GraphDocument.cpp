@@ -1,0 +1,99 @@
+#include "GraphDocument.h"
+
+namespace HamiltonianLab::Models
+{
+    GraphDocument::GraphDocument()
+    {
+        m_core = gcnew ManagedGraph();
+        m_visual = gcnew VisualGraph();
+        m_selection = gcnew HamiltonianLab::Models::Selection(this);
+    }
+
+    VisualNode^ GraphDocument::AddNode(PointF position, float radius, System::String^ label)
+    {
+        int logicalId = m_core->AddNode();
+        auto n = m_visual->AddNode(logicalId, position, radius);
+        if (label != nullptr) 
+            n->Label = label;
+        return n;
+    }
+
+    bool GraphDocument::RemoveNodeByLogicalId(int logicalId)
+    {
+        bool ok = m_core->RemoveNode(logicalId);
+        if (!ok) return false;
+
+        auto edgesToClear = gcnew System::Collections::Generic::List<int>();
+        for each (auto edge in m_visual->Edges)
+        {
+            if (edge->FromLogicalId == logicalId || edge->ToLogicalId == logicalId)
+                edgesToClear->Add(edge->LogicalId);
+        }
+
+        for each (int edgeId in edgesToClear)
+            m_selection->RemoveEdgeByLogicalId(edgeId);
+
+        m_selection->RemoveNodeByLogicalId(logicalId);
+        return m_visual->RemoveNodeByLogicalId(logicalId);
+    }
+
+    VisualEdge^ GraphDocument::AddEdgeByLogicalIds(int uLogicalId, int vLogicalId, double w)
+    {
+        int edgeId = m_core->AddEdge(uLogicalId, vLogicalId, w);
+        return m_visual->AddEdge(edgeId, uLogicalId, vLogicalId, w);
+    }
+
+    bool GraphDocument::RemoveEdgeByLogicalId(int edgeLogicalId)
+    {
+        bool ok = m_core->RemoveEdgeById(edgeLogicalId);
+        if (!ok) return false;
+
+        m_selection->RemoveEdgeByLogicalId(edgeLogicalId);
+        return m_visual->RemoveEdgeByLogicalId(edgeLogicalId);
+    }
+
+    void GraphDocument::SetWeightByLogicalIds(int uLogicalId, int vLogicalId, double w)
+    {
+        m_core->SetWeight(uLogicalId, vLogicalId, w);
+    }
+
+    double GraphDocument::GetWeightByLogicalIds(int uLogicalId, int vLogicalId)
+    {
+        return m_core->GetWeight(uLogicalId, vLogicalId);
+    }
+
+    int GraphDocument::NodeCount() 
+    { 
+        return m_core->NodeCount();
+    }
+
+    int GraphDocument::EdgeCount() 
+    {
+        return m_core->EdgeCount();
+    }
+
+    bool GraphDocument::IsComplete() 
+    {
+        return m_core->IsComplete();
+    }
+
+    bool GraphDocument::ValidateSimple() 
+    { 
+        return m_core->ValidateSimple(); 
+    }
+
+    VisualNode^ GraphDocument::GetNodeAt(PointF p)
+    {
+        return m_visual->GetNodeAt(p);
+    }
+
+    VisualEdge^ GraphDocument::GetEdgeAt(PointF p)
+    {
+        return m_visual->GetEdgeAt(p);
+    }
+
+    VisualNode^ GraphDocument::FindNodeByLogicalId(int logicalId)
+    {
+        return m_visual->FindNodeByLogicalId(logicalId);
+    }
+}

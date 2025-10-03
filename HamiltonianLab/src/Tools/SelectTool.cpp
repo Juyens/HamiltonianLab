@@ -36,7 +36,33 @@ namespace HamiltonianLab
 
     void SelectTool::OnMouseDown(MouseEventArgs^ e)
     {
-        if (!Doc || e->Button != MouseButtons::Left)
+        if (!Doc)
+            return;
+
+        if (e->Button == MouseButtons::Right)
+        {
+            bool canceled = false;
+            if (m_activeInteraction == ActiveInteraction::Marquee && m_marqueeController && m_marqueeController->IsActive)
+            {
+                m_marqueeController->Cancel();
+                canceled = true;
+            }
+
+            if (m_activeInteraction == ActiveInteraction::Drag && m_dragController && m_dragController->IsDragging)
+            {
+                m_dragController->Cancel();
+                canceled = true;
+            }
+
+            if (canceled)
+            {
+                m_activeInteraction = ActiveInteraction::None;
+            }
+
+            return;
+        }
+
+        if (e->Button != MouseButtons::Left)
             return;
 
         bool shift = (Control::ModifierKeys & Keys::Shift) == Keys::Shift;
@@ -170,6 +196,9 @@ namespace HamiltonianLab
 
     Cursor^ SelectTool::GetCursor()
     {
+        if (m_activeInteraction == ActiveInteraction::Drag && m_dragController && m_dragController->IsDragging)
+            return Cursors::SizeAll;
+
         return Cursors::Hand;
     }
 
@@ -179,28 +208,28 @@ namespace HamiltonianLab
         if (!selection)
             return;
 
-        if (!shift && !ctrl)
+        bool wasSelected = selection->IsSelected(node);
+        if (shift)
+        {
+            selection->Toggle(node);
+            m_activeInteraction = ActiveInteraction::None;
+            return;
+        }
+
+        if (ctrl)
+        {
+            selection->Toggle(node);
+            m_activeInteraction = ActiveInteraction::None;
+            return;
+        }
+
+        if (!wasSelected)
         {
             selection->Clear();
             selection->Add(node);
         }
-        else if (ctrl)
-        {
-            selection->Toggle(node);
-        }
-        else if (shift)
-        {
-            selection->Add(node);
-        }
 
-        if (!shift && !ctrl)
-        {
-            StartDrag(point);
-        }
-        else
-        {
-            m_activeInteraction = ActiveInteraction::None;
-        }
+        StartDrag(point);
     }
 
     void SelectTool::HandleEdgeClick(VisualEdge^ edge, bool shift, bool ctrl)
@@ -220,7 +249,7 @@ namespace HamiltonianLab
         }
         else if (shift)
         {
-            selection->Add(edge);
+            selection->Toggle(edge);
         }
 
         m_activeInteraction = ActiveInteraction::None;

@@ -89,6 +89,10 @@ namespace HamiltonianLab::Renderers
         if (!edge->Label || edge->Label->Length == 0)
             return;
 
+        const float baseFontSize = 9.0f;
+        float fontSize = edge->LabelFontSize > 0.0f ? edge->LabelFontSize : baseFontSize;
+        float scale = fontSize / baseFontSize;
+
         PointF labelPosition = edge->LabelPos;
         if (labelPosition.IsEmpty)
         {
@@ -101,7 +105,8 @@ namespace HamiltonianLab::Renderers
             {
                 float nx = -dy / length;
                 float ny = dx / length;
-                const float offset = 16.0f;
+                const float baseOffset = 16.0f;
+                float offset = baseOffset * scale;
                 labelPosition = PointF(midX + nx * offset, midY + ny * offset);
             }
             else
@@ -110,12 +115,16 @@ namespace HamiltonianLab::Renderers
             }
         }
 
-        auto font = gcnew System::Drawing::Font("Segoe UI", 9.0f, FontStyle::Regular, GraphicsUnit::Point);
+        auto font = gcnew System::Drawing::Font("Segoe UI", fontSize, FontStyle::Regular, GraphicsUnit::Point);
         auto format = gcnew StringFormat();
         format->Alignment = StringAlignment::Center;
         format->LineAlignment = StringAlignment::Center;
 
-        RectangleF bounds(labelPosition.X - 20.0f, labelPosition.Y - 10.0f, 40.0f, 20.0f);
+        const float baseWidth = 40.0f;
+        const float baseHeight = 20.0f;
+        float width = baseWidth * scale;
+        float height = baseHeight * scale;
+        RectangleF bounds(labelPosition.X - width * 0.5f, labelPosition.Y - height * 0.5f, width, height);
 
         auto bg = gcnew SolidBrush(Color::FromArgb(200, Color::White));
         auto border = gcnew Pen(Color::FromArgb(160, Color::Black), 1.0f);

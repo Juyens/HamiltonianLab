@@ -13,6 +13,7 @@ namespace HamiltonianLab::Models::Visual
         Weight = 0.0;
         Label = nullptr;
         LabelPos = PointF(0, 0);
+        LabelFontSize = 9.0f;
         IsDirected = false;
         Selected = false;
         Hovered = false;

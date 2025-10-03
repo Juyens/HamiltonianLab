@@ -6,9 +6,17 @@ namespace HamiltonianLab
 {
     namespace
     {
-        constexpr float kLabelHalfWidth = 20.0f;
-        constexpr float kLabelHalfHeight = 10.0f;
-        constexpr float kLabelNormalOffset = 16.0f;
+        constexpr float kBaseLabelHalfWidth = 20.0f;
+        constexpr float kBaseLabelHalfHeight = 10.0f;
+        constexpr float kBaseLabelNormalOffset = 16.0f;
+        constexpr float kBaseFontSize = 9.0f;
+
+        inline float GetLabelScale(VisualEdge^ edge)
+        {
+            if (!edge || edge->LabelFontSize <= 0.0f)
+                return 1.0f;
+            return edge->LabelFontSize / kBaseFontSize;
+        }
     }
 
     SetWeightTool::SetWeightTool(GraphDocument^ doc, ToolController^ controller, Control^ hostControl)
@@ -111,7 +119,8 @@ namespace HamiltonianLab
 
         TextBox^ editor = gcnew TextBox();
         editor->BorderStyle = BorderStyle::None;
-        editor->Font = m_host->Font;
+        float fontSize = edge->LabelFontSize > 0.0f ? edge->LabelFontSize : kBaseFontSize;
+        editor->Font = gcnew System::Drawing::Font("Segoe UI", fontSize, FontStyle::Regular, GraphicsUnit::Point);
         editor->TextAlign = HorizontalAlignment::Center;
         editor->MaxLength = 10; // Max digits for Int32
 
@@ -310,8 +319,12 @@ namespace HamiltonianLab
         if (center.IsEmpty)
             return RectangleF();
 
-        return RectangleF(center.X - kLabelHalfWidth, center.Y - kLabelHalfHeight,
-            kLabelHalfWidth * 2.0f, kLabelHalfHeight * 2.0f);
+        float scale = GetLabelScale(edge);
+        float halfWidth = kBaseLabelHalfWidth * scale;
+        float halfHeight = kBaseLabelHalfHeight * scale;
+
+        return RectangleF(center.X - halfWidth, center.Y - halfHeight,
+            halfWidth * 2.0f, halfHeight * 2.0f);
     }
 
     PointF SetWeightTool::ComputeLabelPosition(VisualEdge^ edge)
@@ -337,7 +350,8 @@ namespace HamiltonianLab
 
         float nx = -dy / length;
         float ny = dx / length;
-        return PointF(midpoint.X + nx * kLabelNormalOffset, midpoint.Y + ny * kLabelNormalOffset);
+        float offset = kBaseLabelNormalOffset * GetLabelScale(edge);
+        return PointF(midpoint.X + nx * offset, midpoint.Y + ny * offset);
     }
 
     void SetWeightTool::InvalidateEdge(VisualEdge^ edge)

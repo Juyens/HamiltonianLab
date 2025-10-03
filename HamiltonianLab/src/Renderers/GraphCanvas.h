@@ -53,6 +53,7 @@ namespace HamiltonianLab::Renderers
         virtual void OnMouseUp(MouseEventArgs^ e) override;
         virtual void OnMouseLeave(EventArgs^ e) override;
         virtual void OnKeyDown(System::Windows::Forms::KeyEventArgs^ e) override;
+        virtual void OnMouseWheel(MouseEventArgs^ e) override;
 
     private:
         void InitStyles();

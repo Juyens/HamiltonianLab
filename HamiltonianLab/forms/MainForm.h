@@ -62,16 +62,16 @@ namespace HamiltonianLab
 			this->canvasPanel = (gcnew System::Windows::Forms::Panel());
 			this->toolTip = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->toolStrip = (gcnew System::Windows::Forms::ToolStrip());
-			this->toolStripSelect = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripNode = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripEdge = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripWeight = (gcnew System::Windows::Forms::ToolStripButton());
-			this->toolStripDelete = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->toolStripSelect = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator2 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->toolStripNode = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator3 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->toolStripEdge = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator4 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->toolStripWeight = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator5 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->toolStripDelete = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator6 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->toolStrip->SuspendLayout();
 			this->SuspendLayout();
@@ -84,7 +84,7 @@ namespace HamiltonianLab
 			this->canvasPanel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->canvasPanel->Location = System::Drawing::Point(12, 38);
 			this->canvasPanel->Name = L"canvasPanel";
-			this->canvasPanel->Size = System::Drawing::Size(776, 550);
+			this->canvasPanel->Size = System::Drawing::Size(1256, 670);
 			this->canvasPanel->TabIndex = 0;
 			// 
 			// toolStrip
@@ -99,9 +99,14 @@ namespace HamiltonianLab
 			this->toolStrip->Location = System::Drawing::Point(0, 0);
 			this->toolStrip->Name = L"toolStrip";
 			this->toolStrip->RenderMode = System::Windows::Forms::ToolStripRenderMode::Professional;
-			this->toolStrip->Size = System::Drawing::Size(800, 27);
+			this->toolStrip->Size = System::Drawing::Size(1280, 27);
 			this->toolStrip->TabIndex = 6;
 			this->toolStrip->Text = L"toolStrip1";
+			// 
+			// toolStripSeparator1
+			// 
+			this->toolStripSeparator1->Name = L"toolStripSeparator1";
+			this->toolStripSeparator1->Size = System::Drawing::Size(6, 27);
 			// 
 			// toolStripSelect
 			// 
@@ -114,6 +119,11 @@ namespace HamiltonianLab
 			this->toolStripSelect->Text = L"Seleccionar";
 			this->toolStripSelect->Click += gcnew System::EventHandler(this, &MainForm::OnToolButtonClick);
 			// 
+			// toolStripSeparator2
+			// 
+			this->toolStripSeparator2->Name = L"toolStripSeparator2";
+			this->toolStripSeparator2->Size = System::Drawing::Size(6, 27);
+			// 
 			// toolStripNode
 			// 
 			this->toolStripNode->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
@@ -124,6 +134,11 @@ namespace HamiltonianLab
 			this->toolStripNode->Tag = L"AddNode";
 			this->toolStripNode->Text = L"Agregar Nodo";
 			this->toolStripNode->Click += gcnew System::EventHandler(this, &MainForm::OnToolButtonClick);
+			// 
+			// toolStripSeparator3
+			// 
+			this->toolStripSeparator3->Name = L"toolStripSeparator3";
+			this->toolStripSeparator3->Size = System::Drawing::Size(6, 27);
 			// 
 			// toolStripEdge
 			// 
@@ -136,6 +151,11 @@ namespace HamiltonianLab
 			this->toolStripEdge->Text = L"Agregar Arista";
 			this->toolStripEdge->Click += gcnew System::EventHandler(this, &MainForm::OnToolButtonClick);
 			// 
+			// toolStripSeparator4
+			// 
+			this->toolStripSeparator4->Name = L"toolStripSeparator4";
+			this->toolStripSeparator4->Size = System::Drawing::Size(6, 27);
+			// 
 			// toolStripWeight
 			// 
 			this->toolStripWeight->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
@@ -146,6 +166,11 @@ namespace HamiltonianLab
 			this->toolStripWeight->Tag = L"SetWeight";
 			this->toolStripWeight->Text = L"Asignar Peso";
 			this->toolStripWeight->Click += gcnew System::EventHandler(this, &MainForm::OnToolButtonClick);
+			// 
+			// toolStripSeparator5
+			// 
+			this->toolStripSeparator5->Name = L"toolStripSeparator5";
+			this->toolStripSeparator5->Size = System::Drawing::Size(6, 27);
 			// 
 			// toolStripDelete
 			// 
@@ -158,31 +183,6 @@ namespace HamiltonianLab
 			this->toolStripDelete->Text = L"Eliminar";
 			this->toolStripDelete->Click += gcnew System::EventHandler(this, &MainForm::OnToolButtonClick);
 			// 
-			// toolStripSeparator1
-			// 
-			this->toolStripSeparator1->Name = L"toolStripSeparator1";
-			this->toolStripSeparator1->Size = System::Drawing::Size(6, 27);
-			// 
-			// toolStripSeparator2
-			// 
-			this->toolStripSeparator2->Name = L"toolStripSeparator2";
-			this->toolStripSeparator2->Size = System::Drawing::Size(6, 27);
-			// 
-			// toolStripSeparator3
-			// 
-			this->toolStripSeparator3->Name = L"toolStripSeparator3";
-			this->toolStripSeparator3->Size = System::Drawing::Size(6, 27);
-			// 
-			// toolStripSeparator4
-			// 
-			this->toolStripSeparator4->Name = L"toolStripSeparator4";
-			this->toolStripSeparator4->Size = System::Drawing::Size(6, 27);
-			// 
-			// toolStripSeparator5
-			// 
-			this->toolStripSeparator5->Name = L"toolStripSeparator5";
-			this->toolStripSeparator5->Size = System::Drawing::Size(6, 27);
-			// 
 			// toolStripSeparator6
 			// 
 			this->toolStripSeparator6->Name = L"toolStripSeparator6";
@@ -193,7 +193,7 @@ namespace HamiltonianLab
 			this->AutoScaleDimensions = System::Drawing::SizeF(120, 120);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->BackColor = System::Drawing::SystemColors::Window;
-			this->ClientSize = System::Drawing::Size(800, 600);
+			this->ClientSize = System::Drawing::Size(1280, 720);
 			this->Controls->Add(this->toolStrip);
 			this->Controls->Add(this->canvasPanel);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));

@@ -161,6 +161,121 @@ namespace HamiltonianLab::Renderers
         Control::OnKeyDown(e);
     }
 
+    void GraphCanvas::OnMouseWheel(MouseEventArgs^ e)
+    {
+        if (!e)
+            return;
+
+        if (!m_doc || !m_doc->Visual)
+        {
+            Control::OnMouseWheel(e);
+            return;
+        }
+
+        int delta = e->Delta;
+        if (delta == 0)
+        {
+            auto handledArgs = dynamic_cast<System::Windows::Forms::HandledMouseEventArgs^>(e);
+            if (handledArgs)
+                handledArgs->Handled = true;
+            return;
+        }
+
+        int direction = delta > 0 ? 1 : -1;
+        bool ctrl = (Control::ModifierKeys & Keys::Control) == Keys::Control;
+        float multiplier = ctrl ? 2.0f : 1.0f;
+
+        const float radiusMin = 8.0f;
+        const float radiusMax = 60.0f;
+        const float strokeMin = 1.0f;
+        const float strokeMax = 8.0f;
+        const float fontMin = 8.0f;
+        const float fontMax = 20.0f;
+
+        float stepR = 2.0f * multiplier * static_cast<float>(direction);
+        float stepE = 1.0f * multiplier * static_cast<float>(direction);
+        float stepF = 1.0f * multiplier * static_cast<float>(direction);
+
+        auto visual = m_doc->Visual;
+        bool changed = false;
+        double radiusAccumulator = 0.0;
+        int radiusCount = 0;
+
+        if (visual->Nodes)
+        {
+            for each (auto node in visual->Nodes)
+            {
+                if (!node)
+                    continue;
+
+                float newRadius = node->Radius + stepR;
+                newRadius = System::Math::Max(radiusMin, System::Math::Min(radiusMax, newRadius));
+                if (System::Math::Abs(newRadius - node->Radius) > 1e-3f)
+                {
+                    node->Radius = newRadius;
+                    changed = true;
+                }
+
+                radiusAccumulator += node->Radius;
+                ++radiusCount;
+            }
+        }
+
+        float newDefaultRadius = visual->DefaultNodeRadius + stepR;
+        newDefaultRadius = System::Math::Max(radiusMin, System::Math::Min(radiusMax, newDefaultRadius));
+        if (System::Math::Abs(newDefaultRadius - visual->DefaultNodeRadius) > 1e-3f)
+        {
+            visual->DefaultNodeRadius = newDefaultRadius;
+            changed = true;
+        }
+
+        if (visual->Edges)
+        {
+            for each (auto edge in visual->Edges)
+            {
+                if (!edge)
+                    continue;
+
+                float newStroke = edge->StrokeWidth + stepE;
+                newStroke = System::Math::Max(strokeMin, System::Math::Min(strokeMax, newStroke));
+                if (System::Math::Abs(newStroke - edge->StrokeWidth) > 1e-3f)
+                {
+                    edge->StrokeWidth = newStroke;
+                    changed = true;
+                }
+
+                float currentFont = edge->LabelFontSize;
+                float newFont = currentFont + stepF;
+                newFont = System::Math::Max(fontMin, System::Math::Min(fontMax, newFont));
+                if (System::Math::Abs(newFont - currentFont) > 1e-3f)
+                {
+                    edge->LabelFontSize = newFont;
+                    changed = true;
+                }
+            }
+        }
+
+        float referenceRadius = radiusCount > 0
+            ? static_cast<float>(radiusAccumulator / radiusCount)
+            : visual->DefaultNodeRadius;
+        float newHitTolerance = System::Math::Max(4.0f, referenceRadius * 0.35f);
+        if (System::Math::Abs(newHitTolerance - visual->HitTolerance) > 1e-3f)
+        {
+            visual->HitTolerance = newHitTolerance;
+            changed = true;
+        }
+
+        if (changed)
+        {
+            m_doc->MarkModified();
+            this->Invalidate();
+        }
+
+        auto handledArgs = dynamic_cast<System::Windows::Forms::HandledMouseEventArgs^>(e);
+        if (handledArgs)
+            handledArgs->Handled = true;
+    }
+
     void GraphCanvas::InitStyles()
     {
         this->SetStyle(ControlStyles::UserPaint, true);

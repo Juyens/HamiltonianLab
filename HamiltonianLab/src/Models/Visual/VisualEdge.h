@@ -25,6 +25,7 @@ namespace HamiltonianLab::Models::Visual
         property double Weight;
         property System::String^ Label;
         property PointF LabelPos;
+        property float LabelFontSize;
         property bool IsDirected;
         property bool Selected;
         property bool Hovered;

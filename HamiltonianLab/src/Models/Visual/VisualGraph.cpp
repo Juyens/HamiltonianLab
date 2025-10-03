@@ -8,7 +8,7 @@ namespace HamiltonianLab::Models::Visual
         Edges = gcnew List<VisualEdge^>();
         DefaultNodeRadius = 20.0f;
         HitTolerance = 8.0f;
-        m_labelCounter = 0;
+        m_labeler = gcnew NodeLabelAllocator();
     }
 
     VisualNode^ VisualGraph::AddNode(int logicalId, PointF position, float radius)
@@ -19,7 +19,7 @@ namespace HamiltonianLab::Models::Visual
             radius <= 0 ? DefaultNodeRadius : radius
         );
 
-        n->Label = GenerateNextAvailableLabel();
+        n->Label = m_labeler->Next();
 
         Nodes->Add(n);
         return n;
@@ -38,6 +38,8 @@ namespace HamiltonianLab::Models::Visual
             if (Nodes[i]->LogicalId == logicalId)
             {
                 Nodes->RemoveAt(i);
+                if (Nodes->Count == 0 && Edges->Count == 0)
+                    m_labeler->Reset();
                 return true;
             }
         }
@@ -77,6 +79,8 @@ namespace HamiltonianLab::Models::Visual
             if (Edges[i]->LogicalId == logicalEdgeId)
             {
                 Edges->RemoveAt(i);
+                if (Nodes->Count == 0 && Edges->Count == 0)
+                    m_labeler->Reset();
                 return true;
             }
         }
@@ -115,64 +119,18 @@ namespace HamiltonianLab::Models::Visual
 
     void VisualGraph::RecomputeLabelCounterFromExisting()
     {
-        int maxIndex = -1;
+        auto labels = gcnew List<String^>();
         for each (auto n in Nodes)
         {
-            int idx = TryParseLabelToIndex(n->Label);
-            if (idx > maxIndex) maxIndex = idx;
+            labels->Add(n->Label);
+            m_labeler->Recompute(labels);
         }
-
-        m_labelCounter = (maxIndex < 0) ? 0 : (maxIndex + 1);
     }
 
     void VisualGraph::Clear()
     {
         Nodes->Clear();
         Edges->Clear();
-        m_labelCounter = 0;
-    }
-
-    String^ VisualGraph::GenerateLabel(int index)
-    {
-        StringBuilder^ sb = gcnew StringBuilder();
-        while (index >= 0)
-        {
-            sb->Insert(0, wchar_t('A' + (index % 26)));
-            index = (index / 26) - 1;
-        }
-        return sb->ToString();
-    }
-
-    int VisualGraph::TryParseLabelToIndex(String^ label)
-    {
-        if (String::IsNullOrEmpty(label)) return -1;
-        int value = 0;
-        for (int i = 0; i < label->Length; ++i)
-        {
-            wchar_t c = label[i];
-            if (c < 'A' || c > 'Z') return -1;
-            value = value * 26 + (c - 'A' + 1);
-        }
-        return value - 1;
-    }
-
-    String^ VisualGraph::GenerateNextAvailableLabel()
-    {
-        while (true)
-        {
-            String^ candidate = GenerateLabel(m_labelCounter);
-            bool exists = false;
-            for each (auto n in Nodes)
-            {
-                if (n->Label != nullptr && n->Label->Equals(candidate))
-                {
-                    exists = true; break;
-                }
-            }
-            m_labelCounter++;
-
-            if (!exists) 
-                return candidate;
-        }
+        m_labeler->Reset();
     }
 }

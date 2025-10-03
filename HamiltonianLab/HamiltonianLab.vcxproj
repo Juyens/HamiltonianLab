@@ -154,6 +154,7 @@
     <ClCompile Include="src\Interop\ManagedGraph.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Models\GraphDocument.cpp" />
+    <ClCompile Include="src\Models\Labeling\NodeLabelAllocator.cpp" />
     <ClCompile Include="src\Models\Logical\LogicalGraph.cpp" />
     <ClCompile Include="src\Models\Visual\VisualEdge.cpp" />
     <ClCompile Include="src\Models\Visual\VisualGraph.cpp" />
@@ -178,6 +179,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="src\Common\ToolMode.h" />
+    <ClInclude Include="src\Models\Labeling\NodeLabelAllocator.h" />
     <ClInclude Include="src\Models\Selection\Selection.h" />
     <ClInclude Include="src\Renderers\SceneRenderer.h" />
     <ClInclude Include="src\Tools\AddEdgeTool.h" />

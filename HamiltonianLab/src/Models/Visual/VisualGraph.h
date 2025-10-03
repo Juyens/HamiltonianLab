@@ -2,13 +2,14 @@
 
 #include <Models/Visual/VisualNode.h>
 #include <Models/Visual/VisualEdge.h>
+#include <Models/Labeling/NodeLabelAllocator.h>
 
 namespace HamiltonianLab::Models::Visual
 {
     using namespace System;
     using namespace System::Collections::Generic;
     using namespace System::Drawing;
-    using namespace System::Text;
+    using namespace HamiltonianLab::Models::Labeling;
 
     public ref class VisualGraph
     {
@@ -37,11 +38,6 @@ namespace HamiltonianLab::Models::Visual
         void Clear();
 
     private:
-        String^ GenerateLabel(int index);
-        int TryParseLabelToIndex(String^ label);
-        String^ GenerateNextAvailableLabel();
-
-    private:
-        int m_labelCounter;
+        NodeLabelAllocator^ m_labeler;
     };
 }

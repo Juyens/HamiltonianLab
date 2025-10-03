@@ -14,8 +14,11 @@ namespace HamiltonianLab::Models
     {
         int logicalId = m_core->AddNode();
         auto n = m_visual->AddNode(logicalId, position, radius);
-        if (label != nullptr) 
+        if (label != nullptr)
+        {
             n->Label = label;
+            m_visual->RecomputeLabelCounterFromExisting();
+        }
         return n;
     }
 

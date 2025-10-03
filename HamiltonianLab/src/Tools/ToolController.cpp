@@ -2,7 +2,7 @@
 
 namespace HamiltonianLab
 {
-    ToolController::ToolController(GraphDocument^ document)
+    ToolController::ToolController(GraphDocument^ document, Control^ hostControl)
         : m_document(document)
         , m_tools(gcnew Dictionary<ToolMode, HamiltonianLab::ITool^>())
         , m_activeTool(nullptr)
@@ -15,7 +15,7 @@ namespace HamiltonianLab
         m_tools->Add(ToolMode::AddNode, gcnew AddNodeTool(m_document));
         m_tools->Add(ToolMode::AddEdge, gcnew AddEdgeTool(m_document));
         m_tools->Add(ToolMode::Delete, gcnew DeleteTool(m_document));
-        m_tools->Add(ToolMode::SetWeight, gcnew SelectTool(m_document));
+        m_tools->Add(ToolMode::SetWeight, gcnew SetWeightTool(m_document, this, hostControl));
 
         SetToolMode(ToolMode::Select);
     }
@@ -130,6 +130,11 @@ namespace HamiltonianLab
 
         m_activeTool->OnKeyDown(e);
         return ConsumeActiveToolRepaint();
+    }
+
+    void ToolController::RequestInvalidate(HamiltonianLab::Models::Visual::VisualEdge^ edge)
+    {
+        InvalidateVisual(edge);
     }
 
     bool ToolController::ConsumeActiveToolRepaint()

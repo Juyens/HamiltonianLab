@@ -64,8 +64,9 @@ namespace HamiltonianLab::Models::Visual
     VisualEdge^ VisualGraph::AddEdge(int logicalEdgeId, int fromLogicalId, int toLogicalId, float w)
     {
         auto e = gcnew VisualEdge(logicalEdgeId, fromLogicalId, toLogicalId);
-        e->Label = w.ToString();
-;       Edges->Add(e);
+        e->Weight = w;
+        e->Label = w.ToString(System::Globalization::CultureInfo::InvariantCulture);
+        Edges->Add(e);
         return e;
     }
 

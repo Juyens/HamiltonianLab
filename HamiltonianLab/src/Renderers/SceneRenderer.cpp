@@ -1,5 +1,7 @@
 #include "SceneRenderer.h"
 
+#include <Tools/SetWeightTool.h>
+
 namespace HamiltonianLab::Renderers
 {
     using namespace System::Drawing::Drawing2D;
@@ -23,7 +25,7 @@ namespace HamiltonianLab::Renderers
 
         if (document && document->Visual)
         {
-            DrawEdges(g, document->Visual);
+            DrawEdges(g, document->Visual, activeTool);
             DrawNodes(g, document->Visual);
         }
 
@@ -38,10 +40,15 @@ namespace HamiltonianLab::Renderers
         }
     }
 
-    void SceneRenderer::DrawEdges(Graphics^ g, VisualGraph^ visual)
+    void SceneRenderer::DrawEdges(Graphics^ g, VisualGraph^ visual, HamiltonianLab::ITool^ activeTool)
     {
         if (!visual)
             return;
+
+        auto setWeightTool = dynamic_cast<SetWeightTool^>(activeTool);
+        VisualEdge^ editingEdge = nullptr;
+        if (setWeightTool && setWeightTool->IsEditing)
+            editingEdge = setWeightTool->ActiveEdge;
 
         for each (auto edge in visual->Edges)
         {
@@ -69,11 +76,12 @@ namespace HamiltonianLab::Renderers
             g->DrawLine(pen, from->Position, to->Position);
             delete pen;
 
-            DrawEdgeLabel(g, edge, from, to);
+            if (!(editingEdge && editingEdge == edge))
+                DrawEdgeLabel(g, edge, from, to, activeTool);
         }
     }
 
-    void SceneRenderer::DrawEdgeLabel(Graphics^ g, VisualEdge^ edge, VisualNode^ from, VisualNode^ to)
+    void SceneRenderer::DrawEdgeLabel(Graphics^ g, VisualEdge^ edge, VisualNode^ from, VisualNode^ to, HamiltonianLab::ITool^ activeTool)
     {
         if (!edge)
             return;
@@ -84,9 +92,22 @@ namespace HamiltonianLab::Renderers
         PointF labelPosition = edge->LabelPos;
         if (labelPosition.IsEmpty)
         {
-            labelPosition = PointF(
-                (from->Position.X + to->Position.X) * 0.5f,
-                (from->Position.Y + to->Position.Y) * 0.5f);
+            float midX = (from->Position.X + to->Position.X) * 0.5f;
+            float midY = (from->Position.Y + to->Position.Y) * 0.5f;
+            float dx = to->Position.X - from->Position.X;
+            float dy = to->Position.Y - from->Position.Y;
+            float length = (float)System::Math::Sqrt(dx * dx + dy * dy);
+            if (length > 1e-3f)
+            {
+                float nx = -dy / length;
+                float ny = dx / length;
+                const float offset = 16.0f;
+                labelPosition = PointF(midX + nx * offset, midY + ny * offset);
+            }
+            else
+            {
+                labelPosition = PointF(midX, midY);
+            }
         }
 
         auto font = gcnew System::Drawing::Font("Segoe UI", 9.0f, FontStyle::Regular, GraphicsUnit::Point);

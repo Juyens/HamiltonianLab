@@ -7,6 +7,7 @@ namespace HamiltonianLab::Models
         m_core = gcnew ManagedGraph();
         m_visual = gcnew VisualGraph();
         m_selection = gcnew HamiltonianLab::Models::Selection(this);
+        m_modified = false;
     }
 
     VisualNode^ GraphDocument::AddNode(PointF position, float radius, System::String^ label)
@@ -40,6 +41,7 @@ namespace HamiltonianLab::Models
     VisualEdge^ GraphDocument::AddEdgeByLogicalIds(int uLogicalId, int vLogicalId, double w)
     {
         int edgeId = m_core->AddEdge(uLogicalId, vLogicalId, w);
+        MarkModified();
         return m_visual->AddEdge(edgeId, uLogicalId, vLogicalId, w);
     }
 
@@ -49,17 +51,29 @@ namespace HamiltonianLab::Models
         if (!ok) return false;
 
         m_selection->RemoveEdgeByLogicalId(edgeLogicalId);
+        MarkModified();
         return m_visual->RemoveEdgeByLogicalId(edgeLogicalId);
     }
 
     void GraphDocument::SetWeightByLogicalIds(int uLogicalId, int vLogicalId, double w)
     {
         m_core->SetWeight(uLogicalId, vLogicalId, w);
+        MarkModified();
     }
 
     double GraphDocument::GetWeightByLogicalIds(int uLogicalId, int vLogicalId)
     {
         return m_core->GetWeight(uLogicalId, vLogicalId);
+    }
+
+    void GraphDocument::MarkModified()
+    {
+        m_modified = true;
+    }
+
+    void GraphDocument::ClearModified()
+    {
+        m_modified = false;
     }
 
     int GraphDocument::NodeCount() 

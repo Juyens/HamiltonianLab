@@ -19,8 +19,8 @@ namespace HamiltonianLab::Renderers
         void Render(Graphics^ g, System::Drawing::Size clientSize, GraphDocument^ document, HamiltonianLab::ITool^ activeTool);
 
     private:
-        void DrawEdges(Graphics^ g, VisualGraph^ visual);
-        void DrawEdgeLabel(Graphics^ g, VisualEdge^ edge, VisualNode^ from, VisualNode^ to);
+        void DrawEdges(Graphics^ g, VisualGraph^ visual, HamiltonianLab::ITool^ activeTool);
+        void DrawEdgeLabel(Graphics^ g, VisualEdge^ edge, VisualNode^ from, VisualNode^ to, HamiltonianLab::ITool^ activeTool);
         void DrawNodes(Graphics^ g, VisualGraph^ visual);
 
     private:

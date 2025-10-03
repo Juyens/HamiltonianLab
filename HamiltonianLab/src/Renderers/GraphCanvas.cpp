@@ -6,7 +6,7 @@ namespace HamiltonianLab::Renderers
         : m_doc(gcnew GraphDocument())
         , m_grid(gcnew GridPainter())
         , m_renderer(gcnew SceneRenderer(m_grid))
-        , m_toolController(gcnew HamiltonianLab::ToolController(m_doc))
+        , m_toolController(gcnew HamiltonianLab::ToolController(m_doc, this))
     {
         InitStyles();
 
@@ -157,6 +157,8 @@ namespace HamiltonianLab::Renderers
             this->Invalidate();
             return;
         }
+
+        this->Invalidate(rect);
     }
 
     void GraphCanvas::UpdateCursor()

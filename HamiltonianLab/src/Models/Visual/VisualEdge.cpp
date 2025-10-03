@@ -10,6 +10,7 @@ namespace HamiltonianLab::Models::Visual
         Kind = EdgeVisualKind::Straight;
         StrokeWidth = 1.0f;
         Stroke = Color::Black;
+        Weight = 0.0;
         Label = nullptr;
         LabelPos = PointF(0, 0);
         IsDirected = false;

@@ -6,6 +6,7 @@
 #include <Tools/AddNodeTool.h>
 #include <Tools/DeleteTool.h>
 #include <Tools/SelectTool.h>
+#include <Tools/SetWeightTool.h>
 
 namespace HamiltonianLab
 {
@@ -20,7 +21,7 @@ namespace HamiltonianLab
     public ref class ToolController
     {
     public:
-        ToolController(GraphDocument^ document);
+        ToolController(GraphDocument^ document, System::Windows::Forms::Control^ hostControl);
         ~ToolController();
 
         void SetInvalidateCallback(Action<System::Drawing::Rectangle>^ callback);
@@ -42,6 +43,8 @@ namespace HamiltonianLab
         {
             GraphDocument^ get() { return m_document; }
         }
+
+        void RequestInvalidate(HamiltonianLab::Models::Visual::VisualEdge^ edge);
 
     private:
         bool ConsumeActiveToolRepaint();

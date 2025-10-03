@@ -39,6 +39,14 @@ namespace HamiltonianLab::Models
             }
         }
 
+        property bool IsModified
+        {
+            bool get()
+            {
+                return m_modified;
+            }
+        }
+
         VisualNode^ AddNode(PointF position, float radius, System::String^ label);
         bool RemoveNodeByLogicalId(int logicalId);
 
@@ -46,6 +54,9 @@ namespace HamiltonianLab::Models
         bool RemoveEdgeByLogicalId(int edgeLogicalId);
         void SetWeightByLogicalIds(int uLogicalId, int vLogicalId, double w);
         double GetWeightByLogicalIds(int uLogicalId, int vLogicalId);
+
+        void MarkModified();
+        void ClearModified();
 
         int NodeCount();
         int EdgeCount();
@@ -60,5 +71,6 @@ namespace HamiltonianLab::Models
         ManagedGraph^ m_core;
         VisualGraph^ m_visual;
         HamiltonianLab::Models::Selection^ m_selection;
+        bool m_modified;
     };
 }

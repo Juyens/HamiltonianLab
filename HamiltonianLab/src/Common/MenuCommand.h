@@ -6,6 +6,7 @@ namespace HamiltonianLab
     {
         None = 0,
         NewGraph,
+        NewGraphRandom,
         Exit,
         FindCycles,
         SolveTsp,

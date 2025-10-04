@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="forms\AdjacencyMatrixForm.cpp" />
     <ClCompile Include="forms\MainForm.cpp" />
     <ClCompile Include="src\Controllers\MenuCommandController.cpp" />
     <ClCompile Include="src\Interaction\MarqueeSelectionController.cpp" />
@@ -183,6 +184,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="forms\AdjacencyMatrixForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="forms\MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -230,6 +234,9 @@
     <Image Include="resources\icons\weight.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="forms\AdjacencyMatrixForm.resx">
+      <DependentUpon>forms\AdjacencyMatrixForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\MainForm.resx">
       <LogicalName>HamiltonianLab.MainForm.resources</LogicalName>
       <SubType>Designer</SubType>

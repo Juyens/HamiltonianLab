@@ -5,7 +5,7 @@
 #include <Services/RandomGraphGenerator.h>
 #include <Services/GraphAnalysisService.h>
 #include <Tools/RandomGraphTool.h>
-
+#include "AdjacencyMatrixForm.h"
 
 namespace HamiltonianLab
 {
@@ -496,6 +496,26 @@ namespace HamiltonianLab
 			{
 				if (this->analysisService)
 					this->analysisService->SolveTspBruteForce();
+				break;
+			}
+			case MenuCommand::ShowMatrix:
+			{
+				if (!this->graphCanvas)
+					return;
+
+				auto document = this->graphCanvas->Document;
+				if (!document)
+					return;
+
+				auto matrixForm = gcnew AdjacencyMatrixForm(document);
+				try
+				{
+					matrixForm->ShowDialog(this);
+				}
+				finally
+				{
+					delete matrixForm;
+				}
 				break;
 			}
 			default:

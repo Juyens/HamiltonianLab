@@ -64,9 +64,9 @@ namespace HamiltonianLab
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(120, 120);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
-			this->ClientSize = System::Drawing::Size(720, 480);
+			this->ClientSize = System::Drawing::Size(800, 600);
 			this->Controls->Add(this->matrixGrid);
-			this->MinimumSize = System::Drawing::Size(480, 320);
+			this->MinimumSize = System::Drawing::Size(800, 600);
 			this->Name = L"AdjacencyMatrixForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
 			this->Text = L"Matriz de adyacencia";

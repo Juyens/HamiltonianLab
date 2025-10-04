@@ -5,6 +5,7 @@
 #include <Services/RandomGraphGenerator.h>
 #include <Services/GraphAnalysisService.h>
 #include <Tools/RandomGraphTool.h>
+
 #include "AdjacencyMatrixForm.h"
 
 namespace HamiltonianLab
@@ -516,6 +517,48 @@ namespace HamiltonianLab
 				{
 					delete matrixForm;
 				}
+				break;
+			}
+			case MenuCommand::About:
+			{
+				auto builder = gcnew System::Text::StringBuilder();
+
+				builder->AppendLine(L"Grupo 4");
+				builder->AppendLine(L"Problema del Agente Viajero");
+				builder->AppendLine();
+				builder->AppendLine(L"Integrantes:");
+				builder->AppendLine(L"Elina Milagros Barrenechea Díaz — U20241D440");
+				builder->AppendLine(L"José Fernando Flores Pinchi — U20241A290");
+				builder->AppendLine(L"Joseph Julius Camargo Briceño — U20241D992");
+				builder->AppendLine(L"Ronal Sebastián Cueto Ninaja — U202413604");
+				builder->AppendLine(L"Sebastián Alonso Yparraguirre Aquino — U20241E121");
+
+				System::Windows::Forms::MessageBox::Show(
+					this,
+					builder->ToString(),
+					L"Acerca de HamiltonianLab",
+					System::Windows::Forms::MessageBoxButtons::OK,
+					System::Windows::Forms::MessageBoxIcon::None);
+
+				break;
+			}
+			case MenuCommand::Instructions:
+			{
+				auto builder = gcnew System::Text::StringBuilder();
+
+				builder->AppendLine(L"1. Ingresar el número de nodos (entre 8 y 16).");
+				builder->AppendLine(L"2. Generar el grafo de forma manual o aleatoria.");
+				builder->AppendLine(L"3. Ejecutar FindCycles para enumerar los ciclos hamiltonianos.");
+				builder->AppendLine(L"4. Ejecutar SolveTsp para resolver el TSP mediante fuerza bruta.");
+				builder->AppendLine(L"5. Usar ShowMatrix para visualizar la matriz de adyacencia.");
+
+				System::Windows::Forms::MessageBox::Show(
+					this,
+					builder->ToString(),
+					L"Instrucciones",
+					System::Windows::Forms::MessageBoxButtons::OK,
+					System::Windows::Forms::MessageBoxIcon::None);
+
 				break;
 			}
 			default:

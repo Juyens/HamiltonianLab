@@ -22,6 +22,8 @@ namespace HamiltonianLab::Models::Visual
         property EdgeVisualKind Kind;
         property float StrokeWidth;
         property Color Stroke;
+        property Color HighlightStroke;
+        property bool Highlighted;
         property double Weight;
         property System::String^ Label;
         property PointF LabelPos;

@@ -3,7 +3,9 @@
 #include <Controllers/MenuCommandController.h>
 #include <Renderers/GraphCanvas.h>
 #include <Services/RandomGraphGenerator.h>
+#include <Services/GraphAnalysisService.h>
 #include <Tools/RandomGraphTool.h>
+
 
 namespace HamiltonianLab
 {
@@ -45,6 +47,12 @@ namespace HamiltonianLab
 				randGen = nullptr;
 			}
 
+			if (analysisService)
+			{
+				delete analysisService;
+				analysisService = nullptr;
+			}
+
 			if (components)
 			{
 				delete components;
@@ -62,6 +70,7 @@ namespace HamiltonianLab
 		Controllers::MenuCommandController^ menu;
 		Tools::RandomGraphTool^ randTool;
 		Services::RandomGraphGenerator^ randGen;
+		Services::GraphAnalysisService^ analysisService;
 
 	private:
 		System::Windows::Forms::Panel^ canvasPanel;
@@ -475,6 +484,18 @@ namespace HamiltonianLab
 				}
 
 				this->Close();
+				break;
+			}
+			case MenuCommand::FindCycles:
+			{
+				if (this->analysisService)
+					this->analysisService->EnumerateHamiltonianCycles();
+				break;
+			}
+			case MenuCommand::SolveTsp:
+			{
+				if (this->analysisService)
+					this->analysisService->SolveTspBruteForce();
 				break;
 			}
 			default:

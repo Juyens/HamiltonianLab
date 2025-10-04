@@ -8,6 +8,17 @@ namespace HamiltonianLab::Models
         m_visual = gcnew VisualGraph();
         m_selection = gcnew HamiltonianLab::Models::Selection(this);
         m_modified = false;
+        m_structureChanged = nullptr;
+    }
+
+    void GraphDocument::StructureChanged::add(EventHandler^ h)
+    {
+        m_structureChanged = static_cast<EventHandler^>(Delegate::Combine(m_structureChanged, h));
+    }
+
+    void GraphDocument::StructureChanged::remove(EventHandler^ h)
+    {
+        m_structureChanged = static_cast<EventHandler^>(Delegate::Remove(m_structureChanged, h));
     }
 
     VisualNode^ GraphDocument::AddNode(PointF position, float radius, System::String^ label)
@@ -19,6 +30,8 @@ namespace HamiltonianLab::Models
             n->Label = label;
             m_visual->RecomputeLabelCounterFromExisting();
         }
+        MarkModified();
+        RaiseStructureChanged();
         return n;
     }
 
@@ -38,14 +51,22 @@ namespace HamiltonianLab::Models
             m_selection->RemoveEdgeByLogicalId(edgeId);
 
         m_selection->RemoveNodeByLogicalId(logicalId);
-        return m_visual->RemoveNodeByLogicalId(logicalId);
+        bool removed = m_visual->RemoveNodeByLogicalId(logicalId);
+        if (removed)
+        {
+            MarkModified();
+            RaiseStructureChanged();
+        }
+        return removed;
     }
 
     VisualEdge^ GraphDocument::AddEdgeByLogicalIds(int uLogicalId, int vLogicalId, double w)
     {
         int edgeId = m_core->AddEdge(uLogicalId, vLogicalId, w);
         MarkModified();
-        return m_visual->AddEdge(edgeId, uLogicalId, vLogicalId, w);
+        auto edge = m_visual->AddEdge(edgeId, uLogicalId, vLogicalId, w);
+        RaiseStructureChanged();
+        return edge;
     }
 
     bool GraphDocument::RemoveEdgeByLogicalId(int edgeLogicalId)
@@ -55,7 +76,10 @@ namespace HamiltonianLab::Models
 
         m_selection->RemoveEdgeByLogicalId(edgeLogicalId);
         MarkModified();
-        return m_visual->RemoveEdgeByLogicalId(edgeLogicalId);
+        bool removed = m_visual->RemoveEdgeByLogicalId(edgeLogicalId);
+        if (removed)
+            RaiseStructureChanged();
+        return removed;
     }
 
     void GraphDocument::SetWeightByLogicalIds(int uLogicalId, int vLogicalId, double w)
@@ -80,7 +104,13 @@ namespace HamiltonianLab::Models
         if (m_core)
             m_core->Clear();
 
-        ClearModified();
+        RaiseStructureChanged();
+    }
+
+    void GraphDocument::ClearEdgeHighlights()
+    {
+        if (m_visual)
+            m_visual->ClearEdgeHighlights();
     }
 
     void GraphDocument::MarkModified()
@@ -93,24 +123,24 @@ namespace HamiltonianLab::Models
         m_modified = false;
     }
 
-    int GraphDocument::NodeCount() 
-    { 
+    int GraphDocument::NodeCount()
+    {
         return m_core->NodeCount();
     }
 
-    int GraphDocument::EdgeCount() 
+    int GraphDocument::EdgeCount()
     {
         return m_core->EdgeCount();
     }
 
-    bool GraphDocument::IsComplete() 
+    bool GraphDocument::IsComplete()
     {
         return m_core->IsComplete();
     }
 
-    bool GraphDocument::ValidateSimple() 
-    { 
-        return m_core->ValidateSimple(); 
+    bool GraphDocument::ValidateSimple()
+    {
+        return m_core->ValidateSimple();
     }
 
     VisualNode^ GraphDocument::GetNodeAt(PointF p)
@@ -126,5 +156,13 @@ namespace HamiltonianLab::Models
     VisualNode^ GraphDocument::FindNodeByLogicalId(int logicalId)
     {
         return m_visual->FindNodeByLogicalId(logicalId);
+    }
+
+    void GraphDocument::RaiseStructureChanged()
+    {
+        EventHandler^ handler = m_structureChanged;
+
+        if (handler != nullptr)
+            handler(this, EventArgs::Empty);
     }
 }

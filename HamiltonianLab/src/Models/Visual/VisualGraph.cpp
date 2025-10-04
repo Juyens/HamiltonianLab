@@ -63,7 +63,7 @@ namespace HamiltonianLab::Models::Visual
         return nullptr;
     }
 
-    VisualEdge^ VisualGraph::AddEdge(int logicalEdgeId, int fromLogicalId, int toLogicalId, float w)
+    VisualEdge^ VisualGraph::AddEdge(int logicalEdgeId, int fromLogicalId, int toLogicalId, double w)
     {
         auto e = gcnew VisualEdge(logicalEdgeId, fromLogicalId, toLogicalId);
         e->Weight = w;
@@ -91,6 +91,22 @@ namespace HamiltonianLab::Models::Visual
     {
         for each (auto e in Edges)
             if (e->LogicalId == logicalEdgeId) return e;
+        return nullptr;
+    }
+
+    VisualEdge^ VisualGraph::FindEdgeBetween(int uLogicalId, int vLogicalId)
+    {
+        for each (auto e in Edges)
+        {
+            if (!e)
+                continue;
+
+            bool direct = (e->FromLogicalId == uLogicalId && e->ToLogicalId == vLogicalId);
+            bool reverse = (e->FromLogicalId == vLogicalId && e->ToLogicalId == uLogicalId);
+            if (direct || reverse)
+                return e;
+        }
+
         return nullptr;
     }
 
@@ -132,5 +148,16 @@ namespace HamiltonianLab::Models::Visual
         Nodes->Clear();
         Edges->Clear();
         m_labeler->Reset();
+    }
+
+    void VisualGraph::ClearEdgeHighlights()
+    {
+        for each (auto edge in Edges)
+        {
+            if (!edge)
+                continue;
+
+            edge->Highlighted = false;
+        }
     }
 }

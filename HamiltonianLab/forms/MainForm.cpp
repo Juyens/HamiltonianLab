@@ -17,6 +17,8 @@ namespace HamiltonianLab
 			this->graphCanvas,
 			this->randGen);
 
+		this->analysisService = gcnew Services::GraphAnalysisService(this->graphCanvas);
+
 		if (this->randTool)
 			this->randTool->WireUp();
 	}

@@ -59,7 +59,12 @@ namespace HamiltonianLab::Renderers
 
             Color stroke = edge->Stroke;
             float width = edge->StrokeWidth;
-            if (edge->Selected)
+            if (edge->Highlighted)
+            {
+                stroke = edge->HighlightStroke;
+                width = System::Math::Max(width + 2.0f, 3.0f);
+            }
+            else if (edge->Selected)
             {
                 stroke = Color::DodgerBlue;
                 width += 2.0f;

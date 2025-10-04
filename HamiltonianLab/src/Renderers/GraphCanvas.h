@@ -37,6 +37,13 @@ namespace HamiltonianLab::Renderers
             HamiltonianLab::Models::Selection^ get() { return m_doc ? m_doc->Selection : nullptr; }
         }
 
+        void SetStatusLabel(System::String^ text);
+        void ClearStatusLabel();
+        property bool HasStatusLabel
+        {
+            bool get() { return m_hasStatusLabel && !System::String::IsNullOrEmpty(m_statusLabel); }
+        }
+
         virtual void RequestInvalidate() = HamiltonianLab::Interaction::IInvalidationSink::RequestInvalidate;
         virtual void RequestInvalidate(System::Drawing::Rectangle rect) = HamiltonianLab::Interaction::IInvalidationSink::RequestInvalidate;
 
@@ -60,11 +67,16 @@ namespace HamiltonianLab::Renderers
         void InitStyles();
         void InvalidateRegion(System::Drawing::Rectangle rect);
         void UpdateCursor();
+        void DrawStatusLabel(System::Drawing::Graphics^ g);
+        void OnDocumentStructureChanged(System::Object^ sender, System::EventArgs^ e);
 
     private:
         GraphDocument^ m_doc;
         GridPainter^ m_grid;
         SceneRenderer^ m_renderer;
         HamiltonianLab::ToolController^ m_toolController;
+        System::String^ m_statusLabel;
+        bool m_hasStatusLabel;
+        System::EventHandler^ m_structureChangedHandler;
     };
 }

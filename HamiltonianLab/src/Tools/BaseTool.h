@@ -34,7 +34,7 @@ namespace HamiltonianLab
             return System::Windows::Forms::Cursors::Default;
         }
 
-        virtual bool ConsumeRepaintRequest() override
+        virtual bool ConsumeRepaintRequest()
         {
             bool need = m_needsRepaint;
             m_needsRepaint = false;

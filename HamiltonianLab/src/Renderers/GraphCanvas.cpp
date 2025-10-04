@@ -7,6 +7,9 @@ namespace HamiltonianLab::Renderers
         , m_grid(gcnew GridPainter())
         , m_renderer(gcnew SceneRenderer(m_grid))
         , m_toolController(gcnew HamiltonianLab::ToolController(m_doc, this))
+        , m_statusLabel(nullptr)
+        , m_hasStatusLabel(false)
+        , m_structureChangedHandler(nullptr)
     {
         InitStyles();
 
@@ -18,10 +21,22 @@ namespace HamiltonianLab::Renderers
 
         m_toolController->SetInvalidateCallback(gcnew System::Action<System::Drawing::Rectangle>(this, &GraphCanvas::InvalidateRegion));
         UpdateCursor();
+
+        if (m_doc)
+        {
+            m_structureChangedHandler = gcnew System::EventHandler(this, &GraphCanvas::OnDocumentStructureChanged);
+            m_doc->StructureChanged += m_structureChangedHandler;
+        }
     }
 
     GraphCanvas::~GraphCanvas()
     {
+        if (m_doc && m_structureChangedHandler)
+        {
+            m_doc->StructureChanged -= m_structureChangedHandler;
+            m_structureChangedHandler = nullptr;
+        }
+
         if (m_toolController)
         {
             delete m_toolController;
@@ -91,6 +106,7 @@ namespace HamiltonianLab::Renderers
             return;
 
         m_renderer->Render(e->Graphics, this->ClientSize, m_doc, m_toolController ? m_toolController->ActiveTool : nullptr);
+        DrawStatusLabel(e->Graphics);
     }
 
     void GraphCanvas::OnPaintBackground(PaintEventArgs^ e)
@@ -306,5 +322,78 @@ namespace HamiltonianLab::Renderers
 
         auto tool = m_toolController->ActiveTool;
         this->Cursor = tool ? tool->GetCursor() : Cursors::Default;
+    }
+
+    void GraphCanvas::SetStatusLabel(System::String^ text)
+    {
+        if (System::String::IsNullOrEmpty(text))
+        {
+            ClearStatusLabel();
+            return;
+        }
+
+        bool wasDifferent = !HasStatusLabel || !m_statusLabel->Equals(text);
+        m_statusLabel = text;
+        m_hasStatusLabel = true;
+
+        if (wasDifferent)
+            this->Invalidate();
+    }
+
+    void GraphCanvas::ClearStatusLabel()
+    {
+        if (!HasStatusLabel)
+        {
+            m_statusLabel = nullptr;
+            m_hasStatusLabel = false;
+            return;
+        }
+
+        m_statusLabel = nullptr;
+        m_hasStatusLabel = false;
+        this->Invalidate();
+    }
+
+    void GraphCanvas::DrawStatusLabel(System::Drawing::Graphics^ g)
+    {
+        if (!g || !HasStatusLabel)
+            return;
+
+        auto text = m_statusLabel;
+        auto font = gcnew System::Drawing::Font("Segoe UI", 9.0f, FontStyle::Bold, GraphicsUnit::Point);
+        auto format = gcnew StringFormat();
+        format->Alignment = StringAlignment::Near;
+        format->LineAlignment = StringAlignment::Near;
+        format->FormatFlags = StringFormatFlags::NoWrap;
+
+        SizeF measured = g->MeasureString(text, font);
+        const float padding = 6.0f;
+        RectangleF bounds(8.0f, 8.0f, measured.Width + padding * 2.0f, measured.Height + padding * 2.0f);
+
+        auto background = gcnew SolidBrush(Color::FromArgb(220, Color::WhiteSmoke));
+        auto border = gcnew Pen(Color::FromArgb(255, 218, 165, 32), 1.5f);
+        auto textBrush = gcnew SolidBrush(Color::FromArgb(255, 40, 40, 40));
+
+        g->FillRectangle(background, bounds);
+        g->DrawRectangle(border, Rectangle::Round(bounds));
+
+        RectangleF textBounds(bounds.X + padding, bounds.Y + padding, bounds.Width - padding * 2.0f, bounds.Height - padding * 2.0f);
+        g->DrawString(text, font, textBrush, textBounds, format);
+
+        delete textBrush;
+        delete border;
+        delete background;
+        delete format;
+        delete font;
+    }
+
+    void GraphCanvas::OnDocumentStructureChanged(System::Object^ sender, System::EventArgs^ e)
+    {
+        if (m_doc)
+            m_doc->ClearEdgeHighlights();
+
+        m_statusLabel = nullptr;
+        m_hasStatusLabel = false;
+        this->Invalidate();
     }
 }

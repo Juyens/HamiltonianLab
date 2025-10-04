@@ -27,15 +27,17 @@ namespace HamiltonianLab::Models::Visual
         VisualNode^ FindNodeByLogicalId(int logicalId);
         VisualNode^ GetNodeAt(PointF p);
 
-        VisualEdge^ AddEdge(int logicalEdgeId, int fromLogicalId, int toLogicalId, float w);
+        VisualEdge^ AddEdge(int logicalEdgeId, int fromLogicalId, int toLogicalId, double w);
         bool RemoveEdgeByLogicalId(int logicalEdgeId);
         VisualEdge^ FindEdgeByLogicalId(int logicalEdgeId);
+        VisualEdge^ FindEdgeBetween(int uLogicalId, int vLogicalId);
         VisualEdge^ GetEdgeAt(PointF p);
 
         System::Collections::Generic::IEnumerable<VisualNode^>^ QueryNodesIn(RectangleF rect);
 
         void RecomputeLabelCounterFromExisting();
         void Clear();
+        void ClearEdgeHighlights();
 
     private:
         NodeLabelAllocator^ m_labeler;

@@ -15,6 +15,12 @@ namespace HamiltonianLab::Models
     public:
         GraphDocument();
 
+        event EventHandler^ StructureChanged
+        {
+            void add(EventHandler^ h);
+            void remove(EventHandler^ h);
+        }
+
         property ManagedGraph^ Core
         {
             ManagedGraph^ get()
@@ -56,6 +62,7 @@ namespace HamiltonianLab::Models
         double GetWeightByLogicalIds(int uLogicalId, int vLogicalId);
 
         void Clear();
+        void ClearEdgeHighlights();
 
         void MarkModified();
         void ClearModified();
@@ -69,10 +76,13 @@ namespace HamiltonianLab::Models
         VisualEdge^ GetEdgeAt(PointF p);
         VisualNode^ FindNodeByLogicalId(int logicalId);
 
+        void RaiseStructureChanged();
+
     private:
         ManagedGraph^ m_core;
         VisualGraph^ m_visual;
         HamiltonianLab::Models::Selection^ m_selection;
         bool m_modified;
+        EventHandler^ m_structureChanged;
     };
 }

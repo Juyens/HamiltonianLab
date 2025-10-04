@@ -1,6 +1,9 @@
 ﻿#pragma once
 
+#include <Controllers/MenuCommandController.h>
 #include <Renderers/GraphCanvas.h>
+#include <Services/RandomGraphGenerator.h>
+#include <Tools/RandomGraphTool.h>
 
 namespace HamiltonianLab
 {
@@ -37,6 +40,9 @@ namespace HamiltonianLab
 
 	private:
 		Renderers::GraphCanvas^ graphCanvas;
+		Controllers::MenuCommandController^ menu;
+		Tools::RandomGraphTool^ randTool;
+		Services::RandomGraphGenerator^ randGen;
 
 	private:
 		System::Windows::Forms::Panel^ canvasPanel;

@@ -7,6 +7,8 @@ namespace HamiltonianLab
 		graphCanvas = gcnew Renderers::GraphCanvas();
 		this->graphCanvas->Parent = this->canvasPanel;
 		this->graphCanvas->Dock = System::Windows::Forms::DockStyle::Fill;
+
+		auto document = this->graphCanvas ? this->graphCanvas->Document : nullptr;
 	}
 
 	ToolMode MainForm::ParseToolMode(System::String^ tag)
@@ -24,8 +26,6 @@ namespace HamiltonianLab
 			return ToolMode::SetWeight;
 		if (tag->Equals(L"Delete"))    
 			return ToolMode::Delete;
-		if (tag->Equals(L"Random"))
-			return ToolMode::Random;
 
 		return ToolMode::Select;
 	}
@@ -35,8 +35,10 @@ namespace HamiltonianLab
 		if (System::String::IsNullOrEmpty(tag)) 
 			return MenuCommand::None;
 
-		if (tag->Equals(L"NewGraph"))        
+		if (tag->Equals(L"NewGraph"))
 			return MenuCommand::NewGraph;
+		if (tag->Equals(L"NewGraphRandom"))
+			return MenuCommand::NewGraphRandom;
 		if (tag->Equals(L"Exit"))            
 			return MenuCommand::Exit;
 		if (tag->Equals(L"FindCycles"))      

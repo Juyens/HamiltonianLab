@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="forms\MainForm.cpp" />
+    <ClCompile Include="src\Controllers\MenuCommandController.cpp" />
     <ClCompile Include="src\Interaction\MarqueeSelectionController.cpp" />
     <ClCompile Include="src\Interaction\MovementConstraints.cpp" />
     <ClCompile Include="src\Interaction\SelectionDragController.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\Renderers\GridPainter.cpp" />
     <ClCompile Include="src\Renderers\SceneRenderer.cpp" />
     <ClCompile Include="src\Services\RandomGraphGenerator.cpp" />
+    <ClCompile Include="src\Tools\RandomGraphTool.cpp" />
     <ClCompile Include="src\Tools\SelectTool.cpp" />
     <ClCompile Include="src\Tools\SetWeightTool.cpp" />
     <ClCompile Include="src\Tools\ToolController.cpp" />
@@ -185,6 +187,7 @@
     </ClInclude>
     <ClInclude Include="src\Common\MenuCommand.h" />
     <ClInclude Include="src\Common\ToolMode.h" />
+    <ClInclude Include="src\Controllers\MenuCommandController.h" />
     <ClInclude Include="src\Interaction\IInvalidationSink.h" />
     <ClInclude Include="src\Interaction\IViewportService.h" />
     <ClInclude Include="src\Interaction\MarqueeSelectionController.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="src\Models\Visual\VisualGraph.h" />
     <ClInclude Include="src\Renderers\GraphCanvas.h" />
     <ClInclude Include="src\Renderers\GridPainter.h" />
+    <ClInclude Include="src\Tools\RandomGraphTool.h" />
     <ClInclude Include="src\Tools\SelectTool.h" />
     <ClInclude Include="src\Tools\SetWeightTool.h" />
     <ClInclude Include="src\Tools\ToolController.h" />

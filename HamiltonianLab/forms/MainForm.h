@@ -52,6 +52,18 @@ namespace HamiltonianLab
 		System::Windows::Forms::ToolStripSeparator^ toolStripSeparator4;
 		System::Windows::Forms::ToolStripSeparator^ toolStripSeparator5;
 		System::Windows::Forms::ToolStripSeparator^ toolStripSeparator6;
+		System::Windows::Forms::MenuStrip^ menuStrip;
+		System::Windows::Forms::ToolStripMenuItem^ menuFile;
+		System::Windows::Forms::ToolStripMenuItem^ itemNewGraph;
+		System::Windows::Forms::ToolStripMenuItem^ itemNewGraphRandom;
+		System::Windows::Forms::ToolStripMenuItem^ itemExit;
+		System::Windows::Forms::ToolStripMenuItem^ menuAlgorithms;
+		System::Windows::Forms::ToolStripMenuItem^ itemFindCycles;
+		System::Windows::Forms::ToolStripMenuItem^ itemSolveTsp;
+		System::Windows::Forms::ToolStripMenuItem^ itemShowMatrix;
+		System::Windows::Forms::ToolStripMenuItem^ menuHelp;
+		System::Windows::Forms::ToolStripMenuItem^ itemAbout;
+		System::Windows::Forms::ToolStripMenuItem^ itemInstructions;
 		System::ComponentModel::IContainer^ components;
 
 #pragma region Windows Form Designer generated code
@@ -73,7 +85,20 @@ namespace HamiltonianLab
 			this->toolStripSeparator5 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->toolStripDelete = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator6 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->menuStrip = (gcnew System::Windows::Forms::MenuStrip());
+			this->menuFile = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemNewGraph = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemNewGraphRandom = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemExit = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->menuAlgorithms = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemFindCycles = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemSolveTsp = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemShowMatrix = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->menuHelp = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemAbout = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->itemInstructions = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->toolStrip->SuspendLayout();
+			this->menuStrip->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// canvasPanel
@@ -82,9 +107,9 @@ namespace HamiltonianLab
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->canvasPanel->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->canvasPanel->Location = System::Drawing::Point(12, 38);
+			this->canvasPanel->Location = System::Drawing::Point(12, 68);
 			this->canvasPanel->Name = L"canvasPanel";
-			this->canvasPanel->Size = System::Drawing::Size(1256, 670);
+			this->canvasPanel->Size = System::Drawing::Size(1256, 640);
 			this->canvasPanel->TabIndex = 0;
 			// 
 			// toolStrip
@@ -96,7 +121,7 @@ namespace HamiltonianLab
 					this->toolStripSelect, this->toolStripSeparator2, this->toolStripNode, this->toolStripSeparator3, this->toolStripEdge, this->toolStripSeparator4,
 					this->toolStripWeight, this->toolStripSeparator5, this->toolStripDelete, this->toolStripSeparator6
 			});
-			this->toolStrip->Location = System::Drawing::Point(0, 0);
+			this->toolStrip->Location = System::Drawing::Point(0, 28);
 			this->toolStrip->Name = L"toolStrip";
 			this->toolStrip->RenderMode = System::Windows::Forms::ToolStripRenderMode::Professional;
 			this->toolStrip->Size = System::Drawing::Size(1280, 27);
@@ -188,6 +213,97 @@ namespace HamiltonianLab
 			this->toolStripSeparator6->Name = L"toolStripSeparator6";
 			this->toolStripSeparator6->Size = System::Drawing::Size(6, 27);
 			// 
+			// menuStrip
+			// 
+			this->menuStrip->ImageScalingSize = System::Drawing::Size(20, 20);
+			this->menuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->menuFile, this->menuAlgorithms,
+					this->menuHelp
+			});
+			this->menuStrip->Location = System::Drawing::Point(0, 0);
+			this->menuStrip->Name = L"menuStrip";
+			this->menuStrip->Size = System::Drawing::Size(1280, 28);
+			this->menuStrip->TabIndex = 7;
+			this->menuStrip->Text = L"menuStrip1";
+			// 
+			// menuFile
+			// 
+			this->menuFile->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->itemNewGraph,
+					this->itemNewGraphRandom, this->itemExit
+			});
+			this->menuFile->Name = L"menuFile";
+			this->menuFile->Size = System::Drawing::Size(73, 24);
+			this->menuFile->Text = L"Archivo";
+			// 
+			// itemNewGraph
+			// 
+			this->itemNewGraph->Name = L"itemNewGraph";
+			this->itemNewGraph->Size = System::Drawing::Size(239, 26);
+			this->itemNewGraph->Text = L"Nuevo grafo";
+			// 
+			// itemNewGraphRandom
+			// 
+			this->itemNewGraphRandom->Name = L"itemNewGraphRandom";
+			this->itemNewGraphRandom->Size = System::Drawing::Size(239, 26);
+			this->itemNewGraphRandom->Text = L"Nuevo grafo aleatorio";
+			// 
+			// itemExit
+			// 
+			this->itemExit->Name = L"itemExit";
+			this->itemExit->Size = System::Drawing::Size(239, 26);
+			this->itemExit->Text = L"Salir";
+			// 
+			// menuAlgorithms
+			// 
+			this->menuAlgorithms->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->itemFindCycles,
+					this->itemSolveTsp, this->itemShowMatrix
+			});
+			this->menuAlgorithms->Name = L"menuAlgorithms";
+			this->menuAlgorithms->Size = System::Drawing::Size(97, 24);
+			this->menuAlgorithms->Text = L"Algoritmos";
+			// 
+			// itemFindCycles
+			// 
+			this->itemFindCycles->Name = L"itemFindCycles";
+			this->itemFindCycles->Size = System::Drawing::Size(294, 26);
+			this->itemFindCycles->Text = L"Enumerar ciclos hamiltonianos";
+			// 
+			// itemSolveTsp
+			// 
+			this->itemSolveTsp->Name = L"itemSolveTsp";
+			this->itemSolveTsp->Size = System::Drawing::Size(294, 26);
+			this->itemSolveTsp->Text = L"Resolver TSP";
+			// 
+			// itemShowMatrix
+			// 
+			this->itemShowMatrix->Name = L"itemShowMatrix";
+			this->itemShowMatrix->Size = System::Drawing::Size(294, 26);
+			this->itemShowMatrix->Text = L"Mostrar matriz de adyacencia";
+			// 
+			// menuHelp
+			// 
+			this->menuHelp->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->itemAbout,
+					this->itemInstructions
+			});
+			this->menuHelp->Name = L"menuHelp";
+			this->menuHelp->Size = System::Drawing::Size(65, 24);
+			this->menuHelp->Text = L"Ayuda";
+			// 
+			// itemAbout
+			// 
+			this->itemAbout->Name = L"itemAbout";
+			this->itemAbout->Size = System::Drawing::Size(225, 26);
+			this->itemAbout->Text = L"Acerca de…";
+			// 
+			// itemInstructions
+			// 
+			this->itemInstructions->Name = L"itemInstructions";
+			this->itemInstructions->Size = System::Drawing::Size(225, 26);
+			this->itemInstructions->Text = L"Instrucciones de uso";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(120, 120);
@@ -195,6 +311,7 @@ namespace HamiltonianLab
 			this->BackColor = System::Drawing::SystemColors::Window;
 			this->ClientSize = System::Drawing::Size(1280, 720);
 			this->Controls->Add(this->toolStrip);
+			this->Controls->Add(this->menuStrip);
 			this->Controls->Add(this->canvasPanel);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MainForm";
@@ -202,6 +319,8 @@ namespace HamiltonianLab
 			this->Text = L"Hv0.1";
 			this->toolStrip->ResumeLayout(false);
 			this->toolStrip->PerformLayout();
+			this->menuStrip->ResumeLayout(false);
+			this->menuStrip->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

@@ -182,6 +182,7 @@
     <ClInclude Include="forms\MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="src\Common\MenuCommand.h" />
     <ClInclude Include="src\Common\ToolMode.h" />
     <ClInclude Include="src\Interaction\IInvalidationSink.h" />
     <ClInclude Include="src\Interaction\IViewportService.h" />

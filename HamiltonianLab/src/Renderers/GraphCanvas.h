@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Common/ToolMode.h>
+#include <Common/MenuCommand.h>
 #include <Interaction/IInvalidationSink.h>
 #include <Interaction/IViewportService.h>
 #include <Models/GraphDocument.h>

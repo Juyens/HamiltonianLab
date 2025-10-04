@@ -11,17 +11,45 @@ namespace HamiltonianLab
 
 	ToolMode MainForm::ParseToolMode(System::String^ tag)
 	{
-		if (tag == L"Select")     
-			return HamiltonianLab::ToolMode::Select;
-		if (tag == L"Delete")    
-			return HamiltonianLab::ToolMode::Delete;
-		if (tag == L"AddNode")    
-			return HamiltonianLab::ToolMode::AddNode;
-		if (tag == L"AddEdge")    
-			return HamiltonianLab::ToolMode::AddEdge;
-		if (tag == L"SetWeight")  
-			return HamiltonianLab::ToolMode::SetWeight;
+		if (System::String::IsNullOrEmpty(tag)) 
+			return ToolMode::None;
 
-		return HamiltonianLab::ToolMode::Select;
+		if (tag->Equals(L"Select"))    
+			return ToolMode::Select;
+		if (tag->Equals(L"AddNode"))   
+			return ToolMode::AddNode;
+		if (tag->Equals(L"AddEdge"))   
+			return ToolMode::AddEdge;
+		if (tag->Equals(L"SetWeight")) 
+			return ToolMode::SetWeight;
+		if (tag->Equals(L"Delete"))    
+			return ToolMode::Delete;
+		if (tag->Equals(L"Random"))
+			return ToolMode::Random;
+
+		return ToolMode::Select;
+	}
+
+	MenuCommand MainForm::ParseMenuCommand(System::String^ tag)
+	{
+		if (System::String::IsNullOrEmpty(tag)) 
+			return MenuCommand::None;
+
+		if (tag->Equals(L"NewGraph"))        
+			return MenuCommand::NewGraph;
+		if (tag->Equals(L"Exit"))            
+			return MenuCommand::Exit;
+		if (tag->Equals(L"FindCycles"))      
+			return MenuCommand::FindCycles;
+		if (tag->Equals(L"SolveTsp"))       
+			return MenuCommand::SolveTsp;
+		if (tag->Equals(L"ShowMatrix"))      
+			return MenuCommand::ShowMatrix;
+		if (tag->Equals(L"About"))           
+			return MenuCommand::About;
+		if (tag->Equals(L"Instructions"))    
+			return MenuCommand::Instructions;
+
+		return MenuCommand::About;
 	}
 }

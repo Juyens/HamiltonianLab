@@ -9,6 +9,7 @@ namespace HamiltonianLab
         AddNode,
         AddEdge,
         Delete,
-        SetWeight
+        SetWeight,
+        Random
     };
 }

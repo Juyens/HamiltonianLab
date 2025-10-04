@@ -33,6 +33,7 @@ namespace HamiltonianLab
 	private:
 		void Initialize();
 		ToolMode ParseToolMode(System::String^ tag);
+		MenuCommand ParseMenuCommand(System::String^ tag);
 
 	private:
 		Renderers::GraphCanvas^ graphCanvas;
@@ -55,7 +56,6 @@ namespace HamiltonianLab
 		System::Windows::Forms::MenuStrip^ menuStrip;
 		System::Windows::Forms::ToolStripMenuItem^ menuFile;
 		System::Windows::Forms::ToolStripMenuItem^ itemNewGraph;
-		System::Windows::Forms::ToolStripMenuItem^ itemNewGraphRandom;
 		System::Windows::Forms::ToolStripMenuItem^ itemExit;
 		System::Windows::Forms::ToolStripMenuItem^ menuAlgorithms;
 		System::Windows::Forms::ToolStripMenuItem^ itemFindCycles;
@@ -64,6 +64,11 @@ namespace HamiltonianLab
 		System::Windows::Forms::ToolStripMenuItem^ menuHelp;
 		System::Windows::Forms::ToolStripMenuItem^ itemAbout;
 		System::Windows::Forms::ToolStripMenuItem^ itemInstructions;
+		System::Windows::Forms::ToolStripButton^ toolStripRandom;
+		System::Windows::Forms::ToolStripTextBox^ toolStripNodeCount;
+		System::Windows::Forms::ToolStripSeparator^ toolStripSeparator7;
+		System::Windows::Forms::ToolStripLabel^ toolStripLabel;
+		System::Windows::Forms::ToolStripSeparator^ toolStripSeparator8;
 		System::ComponentModel::IContainer^ components;
 
 #pragma region Windows Form Designer generated code
@@ -85,10 +90,14 @@ namespace HamiltonianLab
 			this->toolStripSeparator5 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->toolStripDelete = (gcnew System::Windows::Forms::ToolStripButton());
 			this->toolStripSeparator6 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->toolStripRandom = (gcnew System::Windows::Forms::ToolStripButton());
+			this->toolStripSeparator7 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->toolStripLabel = (gcnew System::Windows::Forms::ToolStripLabel());
+			this->toolStripNodeCount = (gcnew System::Windows::Forms::ToolStripTextBox());
+			this->toolStripSeparator8 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->menuStrip = (gcnew System::Windows::Forms::MenuStrip());
 			this->menuFile = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->itemNewGraph = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->itemNewGraphRandom = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->itemExit = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuAlgorithms = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->itemFindCycles = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -116,10 +125,11 @@ namespace HamiltonianLab
 			// 
 			this->toolStrip->BackColor = System::Drawing::SystemColors::MenuBar;
 			this->toolStrip->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->toolStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(11) {
+			this->toolStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(16) {
 				this->toolStripSeparator1,
 					this->toolStripSelect, this->toolStripSeparator2, this->toolStripNode, this->toolStripSeparator3, this->toolStripEdge, this->toolStripSeparator4,
-					this->toolStripWeight, this->toolStripSeparator5, this->toolStripDelete, this->toolStripSeparator6
+					this->toolStripWeight, this->toolStripSeparator5, this->toolStripDelete, this->toolStripSeparator6, this->toolStripRandom, this->toolStripSeparator7,
+					this->toolStripLabel, this->toolStripNodeCount, this->toolStripSeparator8
 			});
 			this->toolStrip->Location = System::Drawing::Point(0, 28);
 			this->toolStrip->Name = L"toolStrip";
@@ -213,6 +223,41 @@ namespace HamiltonianLab
 			this->toolStripSeparator6->Name = L"toolStripSeparator6";
 			this->toolStripSeparator6->Size = System::Drawing::Size(6, 27);
 			// 
+			// toolStripRandom
+			// 
+			this->toolStripRandom->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Image;
+			this->toolStripRandom->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"toolStripRandom.Image")));
+			this->toolStripRandom->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->toolStripRandom->Name = L"toolStripRandom";
+			this->toolStripRandom->Size = System::Drawing::Size(29, 24);
+			this->toolStripRandom->Tag = L"Random";
+			this->toolStripRandom->Text = L"Generar grafo aleatorio";
+			// 
+			// toolStripSeparator7
+			// 
+			this->toolStripSeparator7->Name = L"toolStripSeparator7";
+			this->toolStripSeparator7->Size = System::Drawing::Size(6, 27);
+			// 
+			// toolStripLabel
+			// 
+			this->toolStripLabel->Name = L"toolStripLabel";
+			this->toolStripLabel->Size = System::Drawing::Size(60, 24);
+			this->toolStripLabel->Text = L"Nodos :";
+			// 
+			// toolStripNodeCount
+			// 
+			this->toolStripNodeCount->BackColor = System::Drawing::SystemColors::Window;
+			this->toolStripNodeCount->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->toolStripNodeCount->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
+			this->toolStripNodeCount->MaxLength = 2;
+			this->toolStripNodeCount->Name = L"toolStripNodeCount";
+			this->toolStripNodeCount->Size = System::Drawing::Size(30, 27);
+			// 
+			// toolStripSeparator8
+			// 
+			this->toolStripSeparator8->Name = L"toolStripSeparator8";
+			this->toolStripSeparator8->Size = System::Drawing::Size(6, 27);
+			// 
 			// menuStrip
 			// 
 			this->menuStrip->ImageScalingSize = System::Drawing::Size(20, 20);
@@ -228,9 +273,9 @@ namespace HamiltonianLab
 			// 
 			// menuFile
 			// 
-			this->menuFile->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+			this->menuFile->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
 				this->itemNewGraph,
-					this->itemNewGraphRandom, this->itemExit
+					this->itemExit
 			});
 			this->menuFile->Name = L"menuFile";
 			this->menuFile->Size = System::Drawing::Size(73, 24);
@@ -239,20 +284,18 @@ namespace HamiltonianLab
 			// itemNewGraph
 			// 
 			this->itemNewGraph->Name = L"itemNewGraph";
-			this->itemNewGraph->Size = System::Drawing::Size(239, 26);
+			this->itemNewGraph->Size = System::Drawing::Size(175, 26);
+			this->itemNewGraph->Tag = L"NewGraph";
 			this->itemNewGraph->Text = L"Nuevo grafo";
-			// 
-			// itemNewGraphRandom
-			// 
-			this->itemNewGraphRandom->Name = L"itemNewGraphRandom";
-			this->itemNewGraphRandom->Size = System::Drawing::Size(239, 26);
-			this->itemNewGraphRandom->Text = L"Nuevo grafo aleatorio";
+			this->itemNewGraph->Click += gcnew System::EventHandler(this, &MainForm::OnMenuItemClick);
 			// 
 			// itemExit
 			// 
 			this->itemExit->Name = L"itemExit";
-			this->itemExit->Size = System::Drawing::Size(239, 26);
+			this->itemExit->Size = System::Drawing::Size(175, 26);
+			this->itemExit->Tag = L"Exit";
 			this->itemExit->Text = L"Salir";
+			this->itemExit->Click += gcnew System::EventHandler(this, &MainForm::OnMenuItemClick);
 			// 
 			// menuAlgorithms
 			// 
@@ -268,19 +311,25 @@ namespace HamiltonianLab
 			// 
 			this->itemFindCycles->Name = L"itemFindCycles";
 			this->itemFindCycles->Size = System::Drawing::Size(294, 26);
+			this->itemFindCycles->Tag = L"FindCycles";
 			this->itemFindCycles->Text = L"Enumerar ciclos hamiltonianos";
+			this->itemFindCycles->Click += gcnew System::EventHandler(this, &MainForm::OnMenuItemClick);
 			// 
 			// itemSolveTsp
 			// 
 			this->itemSolveTsp->Name = L"itemSolveTsp";
 			this->itemSolveTsp->Size = System::Drawing::Size(294, 26);
+			this->itemSolveTsp->Tag = L"SolveTsp";
 			this->itemSolveTsp->Text = L"Resolver TSP";
+			this->itemSolveTsp->Click += gcnew System::EventHandler(this, &MainForm::OnMenuItemClick);
 			// 
 			// itemShowMatrix
 			// 
 			this->itemShowMatrix->Name = L"itemShowMatrix";
 			this->itemShowMatrix->Size = System::Drawing::Size(294, 26);
+			this->itemShowMatrix->Tag = L"ShowMatrix";
 			this->itemShowMatrix->Text = L"Mostrar matriz de adyacencia";
+			this->itemShowMatrix->Click += gcnew System::EventHandler(this, &MainForm::OnMenuItemClick);
 			// 
 			// menuHelp
 			// 
@@ -296,13 +345,17 @@ namespace HamiltonianLab
 			// 
 			this->itemAbout->Name = L"itemAbout";
 			this->itemAbout->Size = System::Drawing::Size(225, 26);
+			this->itemAbout->Tag = L"About";
 			this->itemAbout->Text = L"Acerca de…";
+			this->itemAbout->Click += gcnew System::EventHandler(this, &MainForm::OnMenuItemClick);
 			// 
 			// itemInstructions
 			// 
 			this->itemInstructions->Name = L"itemInstructions";
 			this->itemInstructions->Size = System::Drawing::Size(225, 26);
+			this->itemInstructions->Tag = L"Instructions";
 			this->itemInstructions->Text = L"Instrucciones de uso";
+			this->itemInstructions->Click += gcnew System::EventHandler(this, &MainForm::OnMenuItemClick);
 			// 
 			// MainForm
 			// 
@@ -329,13 +382,24 @@ namespace HamiltonianLab
 	private:
 		System::Void OnToolButtonClick(System::Object^ sender, System::EventArgs^ e)
 		{
-			ToolStripButton^ b = dynamic_cast<ToolStripButton^>(sender);
-			if (!b || b->Tag == nullptr)
+			auto button = dynamic_cast<ToolStripButton^>(sender);
+
+			if (!button)
 				return;
 
-			ToolMode mode = ParseToolMode(safe_cast<System::String^>(b->Tag));
+			ToolMode mode = ParseToolMode(safe_cast<System::String^>(button->Tag));
 			if (this->graphCanvas)
 				this->graphCanvas->SetToolMode(mode);
 		}
-    };
+
+		System::Void OnMenuItemClick(System::Object^ sender, System::EventArgs^ e)
+		{
+			auto item = dynamic_cast<System::Windows::Forms::ToolStripMenuItem^>(sender);
+
+			if (!item)
+				return;
+
+			MenuCommand command = ParseMenuCommand(safe_cast<System::String^>(item->Tag));
+		}
+};
 }

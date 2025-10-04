@@ -9,6 +9,16 @@ namespace HamiltonianLab
 		this->graphCanvas->Dock = System::Windows::Forms::DockStyle::Fill;
 
 		auto document = this->graphCanvas ? this->graphCanvas->Document : nullptr;
+
+		this->randGen = gcnew Services::RandomGraphGenerator(this->graphCanvas);
+		this->randTool = gcnew Tools::RandomGraphTool(
+			this->toolStripRandom,
+			this->toolStripNodeCount,
+			this->graphCanvas,
+			this->randGen);
+
+		if (this->randTool)
+			this->randTool->WireUp();
 	}
 
 	ToolMode MainForm::ParseToolMode(System::String^ tag)

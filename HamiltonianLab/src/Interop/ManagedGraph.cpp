@@ -97,6 +97,12 @@ namespace HamiltonianLab::Interop
         m_native->SetWeight(a, b, w);
     }
 
+    void ManagedGraph::Clear()
+    {
+        EnsureNotDisposed();
+        m_native->Clear();
+    }
+
     cli::array<NeighborInfo>^ ManagedGraph::Neighbors(int nodeId)
     {
         EnsureNotDisposed();

@@ -48,6 +48,8 @@ namespace HamiltonianLab::Models::Logical
 
         const std::vector<Neighbor>& Neighbors(int nodeId) const;
 
+        void Clear();
+
         bool IsComplete() const;
         bool ValidateSimple() const;
 

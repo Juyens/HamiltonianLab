@@ -27,9 +27,28 @@ namespace HamiltonianLab
 	protected:
 		~MainForm()
 		{
+			if (menu)
+			{
+				delete menu;
+				menu = nullptr;
+			}
+
+			if (randTool)
+			{
+				delete randTool;
+				randTool = nullptr;
+			}
+
+			if (randGen)
+			{
+				delete randGen;
+				randGen = nullptr;
+			}
+
 			if (components)
 			{
 				delete components;
+				components = nullptr;
 			}
 		}
 
@@ -406,6 +425,61 @@ namespace HamiltonianLab
 				return;
 
 			MenuCommand command = ParseMenuCommand(safe_cast<System::String^>(item->Tag));
+
+			switch (command)
+			{
+			case MenuCommand::NewGraph:
+			{
+				if (!this->graphCanvas)
+					return;
+
+				auto document = this->graphCanvas->Document;
+				if (!document)
+					return;
+
+				document->Clear();
+				this->graphCanvas->Invalidate();
+
+				if (this->toolStripNode)
+					this->toolStripNode->PerformClick();
+				else
+					this->graphCanvas->SetToolMode(ToolMode::AddNode);
+
+				if (this->toolStripNodeCount)
+				{
+					this->toolStripNodeCount->SelectAll();
+					if (this->toolStripNodeCount->Control)
+						this->toolStripNodeCount->Control->Focus();
+				}
+
+				break;
+			}
+			case MenuCommand::Exit:
+			{
+				if (this->menu)
+				{
+					delete this->menu;
+					this->menu = nullptr;
+				}
+
+				if (this->randTool)
+				{
+					delete this->randTool;
+					this->randTool = nullptr;
+				}
+
+				if (this->randGen)
+				{
+					delete this->randGen;
+					this->randGen = nullptr;
+				}
+
+				this->Close();
+				break;
+			}
+			default:
+				break;
+			}
 		}
-};
+	};
 }

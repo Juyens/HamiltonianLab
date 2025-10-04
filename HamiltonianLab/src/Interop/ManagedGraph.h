@@ -32,7 +32,9 @@ namespace HamiltonianLab::Interop
         int  EdgeCount();
 
         double GetWeight(int a, int b);
-        void   SetWeight(int a, int b, double w);
+        void SetWeight(int a, int b, double w);
+
+        void Clear();
 
         cli::array<NeighborInfo>^ Neighbors(int nodeId);
 

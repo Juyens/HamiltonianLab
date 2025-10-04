@@ -55,6 +55,8 @@ namespace HamiltonianLab::Models
         void SetWeightByLogicalIds(int uLogicalId, int vLogicalId, double w);
         double GetWeightByLogicalIds(int uLogicalId, int vLogicalId);
 
+        void Clear();
+
         void MarkModified();
         void ClearModified();
 

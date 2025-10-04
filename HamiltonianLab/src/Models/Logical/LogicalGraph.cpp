@@ -40,6 +40,16 @@ namespace HamiltonianLab::Models::Logical
         return m_nodes.size();
     }
 
+    void LogicalGraph::Clear()
+    {
+        m_nodes.clear();
+        m_edges.clear();
+        m_edgeKeyToId.clear();
+        m_adj.clear();
+        m_nextNodeId = 0;
+        m_nextEdgeId = 0;
+    }
+
     int LogicalGraph::AddEdge(int a, int b, double w)
     {
         if (a == b) throw std::invalid_argument("Self-loops no permitidos en grafo simple.");

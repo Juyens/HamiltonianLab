@@ -69,6 +69,20 @@ namespace HamiltonianLab::Models
         return m_core->GetWeight(uLogicalId, vLogicalId);
     }
 
+    void GraphDocument::Clear()
+    {
+        if (m_selection)
+            m_selection->Clear();
+
+        if (m_visual)
+            m_visual->Clear();
+
+        if (m_core)
+            m_core->Clear();
+
+        ClearModified();
+    }
+
     void GraphDocument::MarkModified()
     {
         m_modified = true;

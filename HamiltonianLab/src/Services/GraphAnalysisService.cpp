@@ -128,7 +128,7 @@ namespace HamiltonianLab::Services
                 sb->AppendFormat("... y {0} ciclos adicionales.\n", count - cycles->Count);
         }
 
-        MessageBox::Show(sb->ToString(), "Ciclos hamiltonianos", MessageBoxButtons::OK, MessageBoxIcon::Information);
+        MessageBox::Show(sb->ToString(), "Ciclos hamiltonianos", MessageBoxButtons::OK, MessageBoxIcon::None);
     }
 
     void GraphAnalysisService::EnumerateHamiltonianCycles()
@@ -347,6 +347,6 @@ namespace HamiltonianLab::Services
 
         auto summary = BuildCycleLabel(bestCycle, labelMap);
         summary = String::Format("Camino óptimo: {0}\nCosto total: {1}", summary, FormatCost(bestCost));
-        MessageBox::Show(summary, "Resultado TSP", MessageBoxButtons::OK, MessageBoxIcon::Information);
+        MessageBox::Show(summary, "Resultado TSP", MessageBoxButtons::OK, MessageBoxIcon::None);
     }
 }

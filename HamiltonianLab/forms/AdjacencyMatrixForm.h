@@ -45,6 +45,7 @@ namespace HamiltonianLab
 #pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AdjacencyMatrixForm::typeid));
 			this->matrixGrid = (gcnew System::Windows::Forms::DataGridView());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->matrixGrid))->BeginInit();
 			this->SuspendLayout();
@@ -57,7 +58,7 @@ namespace HamiltonianLab
 			this->matrixGrid->Name = L"matrixGrid";
 			this->matrixGrid->RowHeadersWidth = 51;
 			this->matrixGrid->RowTemplate->Height = 24;
-			this->matrixGrid->Size = System::Drawing::Size(720, 480);
+			this->matrixGrid->Size = System::Drawing::Size(800, 600);
 			this->matrixGrid->TabIndex = 0;
 			// 
 			// AdjacencyMatrixForm
@@ -66,6 +67,7 @@ namespace HamiltonianLab
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->ClientSize = System::Drawing::Size(800, 600);
 			this->Controls->Add(this->matrixGrid);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MinimumSize = System::Drawing::Size(800, 600);
 			this->Name = L"AdjacencyMatrixForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;

@@ -217,4 +217,12 @@
       <Filter>Archivos de recursos</Filter>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="appicon.rc">
+      <Filter>Archivos de recursos</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="appicon.aps" />
+  </ItemGroup>
 </Project>

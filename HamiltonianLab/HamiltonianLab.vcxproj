@@ -236,11 +236,21 @@
   <ItemGroup>
     <EmbeddedResource Include="forms\AdjacencyMatrixForm.resx">
       <DependentUpon>forms\AdjacencyMatrixForm.h</DependentUpon>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">HamiltonianLab.AdjacencyMatrixForm.resources</LogicalName>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">HamiltonianLab.AdjacencyMatrixForm.resources</LogicalName>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">HamiltonianLab.AdjacencyMatrixForm.resources</LogicalName>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">HamiltonianLab.AdjacencyMatrixForm.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\MainForm.resx">
       <LogicalName>HamiltonianLab.MainForm.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="appicon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="appicon.aps" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

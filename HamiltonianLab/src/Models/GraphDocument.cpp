@@ -23,6 +23,17 @@ namespace HamiltonianLab::Models
 
     VisualNode^ GraphDocument::AddNode(PointF position, float radius, System::String^ label)
     {
+        const int maxNodes = 16;
+        if (NodeCount() >= maxNodes)
+        {
+            System::Windows::Forms::MessageBox::Show(
+                L"El grafo no puede tener más de 16 nodos.",
+                L"Agregar nodo",
+                System::Windows::Forms::MessageBoxButtons::OK,
+                System::Windows::Forms::MessageBoxIcon::Error);
+            return nullptr;
+        }
+
         int logicalId = m_core->AddNode();
         auto n = m_visual->AddNode(logicalId, position, radius);
         if (label != nullptr)

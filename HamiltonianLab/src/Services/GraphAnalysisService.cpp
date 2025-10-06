@@ -629,7 +629,7 @@ namespace HamiltonianLab::Services
             return;
         }
 
-        ShowStatusMessage(L"Resolviendo TSP (Held-Karp)...");
+        ShowStatusMessage(L"Resolviendo TSP...");
         Task::Run(gcnew System::Action(this, &GraphAnalysisService::RunSolveTspTask));
     }
 }

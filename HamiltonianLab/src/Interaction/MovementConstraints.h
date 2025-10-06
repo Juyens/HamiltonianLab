@@ -15,7 +15,7 @@ namespace HamiltonianLab::Interaction
         PointF ConstrainPoint(PointF point);
         PointF ConstrainNode(PointF point, float radius);
         RectangleF ConstrainRectangle(RectangleF rect);
-        PointF ConstrainDelta(IEnumerable<PointF>^ origins, IEnumerable<float>^ radii, PointF desiredDelta);
+        PointF ConstrainDelta(System::Collections::Generic::IEnumerable<PointF>^ origins, System::Collections::Generic::IEnumerable<float>^ radii, PointF desiredDelta);
 
     private:
         IViewportService^ m_viewportService;

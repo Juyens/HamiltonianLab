@@ -75,6 +75,16 @@ namespace HamiltonianLab::Models
     {
         int edgeId = m_core->AddEdge(uLogicalId, vLogicalId, w);
         MarkModified();
+
+        auto existing = m_visual->FindEdgeByLogicalId(edgeId);
+        if (existing != nullptr)
+        {
+            existing->Weight = w;
+            existing->Label = w.ToString(System::Globalization::CultureInfo::InvariantCulture);
+            RaiseStructureChanged();
+            return existing;
+        }
+
         auto edge = m_visual->AddEdge(edgeId, uLogicalId, vLogicalId, w);
         RaiseStructureChanged();
         return edge;
